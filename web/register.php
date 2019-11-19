@@ -54,15 +54,27 @@
                     </div>
                     <div class="input-group">
                         <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="account_type" required>
+                            <select id="selectBox" onchange="changeFuncCounsellor();" name="account_type" required>
                                 <option disabled="disabled" selected="selected">Account Type</option>
-                                <option>Patient</option>
-                                <option>Counsellor</option>
-                                <option>Admin</option>
+                                <option value>Patient</option>
+                                <option value>Counsellor</option>
                             </select>
                             <div class="select-dropdown"></div>
                         </div>
                     </div>
+
+                    <div id="counsellorDiv" class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select id="counsellorBox" onchange="counsellorSelect();" name="account_type" required>
+                                <option disabled="disabled" selected="selected">Account Type</option>
+                                <option value>Health</option>
+                                <option value>Brain Debug</option>
+                                <option value>Physical Debug</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+
                     <div class="input-group">
                         <input class="input--style-3" type="email" placeholder="Email" name="email" required>
                     </div>
@@ -99,6 +111,24 @@
 
 </html>
 <!-- end document-->
+
+<script>
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $("#counsellorDiv").hide()
+});
+
+function changeFuncCounsellor(){
+    selectedText = $('#selectBox :selected').text();    
+    // console.log("TEccccccccc")
+    // console.log(text)
+    if(selectedText == "Counsellor"){
+        $("#counsellorDiv").show()
+    }
+}
+
+</script>
 
 <?php
 /**

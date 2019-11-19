@@ -33,6 +33,19 @@
             <div class="card-heading"></div>
             <div class="card-body">
                 <h2 class="title">Login</h2>
+                
+                <div id="acntTypeDropDown" class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="account_type" required>
+                                <option disabled="disabled" selected="selected">Account Type</option>
+                                <option>Patient</option>
+                                <option>Counsellor</option>
+                                <option>Admin</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                </div>
+
                 <form method="POST">
                     <div class="input-group">
                         <input class="input--style-3" type="email" placeholder="Email" name="email">
@@ -70,6 +83,13 @@
 </html>
 <!-- end document-->
 
+<script>
+    if($account_type=="Counsellor"){
+        $("#acntTypeDropDown").show()
+    }
+</script>
+
+
 <?php
 /**
  * Created by PhpStorm.
@@ -92,7 +112,8 @@ if (isset($_POST['submit'])) {
 
     echo "NAME IS: " . $user->getName(). " TYPE: ". $user->getAccountType();
 
-    header("location: generatenews.php");
+    // header("location: generatenews.php");
+    header("location: Questionnaire.php");
     exit();
 }
 
