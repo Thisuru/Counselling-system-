@@ -40,26 +40,53 @@ function createUser($link, $name, $dob, $gender, $account_type, $email, $passwor
 }
 
 function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
-    $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".$password."')";
 
-    if (mysqli_query($link, $query)) {
-        return true;
+    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".$password."'";
+    
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) == 0) {
+
+        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".$password."')";
+
+        if (mysqli_query($link, $query)) {
+            return true;
+        }
+    
+        return false;
+
     }
 
     return false;
+    
+
 }
 
 function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state) {
-    $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".$password."','".$state."')";
-    echo $query;
-    if (mysqli_query($link, $query)) {
 
-        echo "sucess";
-        return true;
+    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".$password."'";
+    
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) == 0) {
+        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".$password."','".$state."')";
+        echo $query;
+        if (mysqli_query($link, $query)) {
+    
+            echo "sucess";
+            return true;
+        }
+    
+        return false;
+    }else{
+        return false;
     }
 
-    return false;
-}
+
+    }
+
+
+
 
 function insertNewsRecord($link, $record) {
     $query = "INSERT INTO news_feed(admin_email, admin_name, description, photo_path, date_time) VALUES('".$record->getAdminEmail()."', '".$record->getAdminName()."', '".$record->getDescription()."', '".$record->getPhotoPath()."', '".$record->getDateTime()."')";
