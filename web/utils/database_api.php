@@ -11,6 +11,7 @@ require ('NewsRecord.php');
 require ('MusicRecord.php');
 require ('ChatMessage.php');
 
+
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = '';
@@ -32,6 +33,28 @@ function createUser($link, $name, $dob, $gender, $account_type, $email, $passwor
     $query = "INSERT INTO users VALUES('".$name."', '".$dob."', '".$gender."', '".$account_type."', '".$email."', '".$password."')";
 
     if (mysqli_query($link, $query)) {
+        return true;
+    }
+
+    return false;
+}
+
+function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
+    $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".$password."')";
+
+    if (mysqli_query($link, $query)) {
+        return true;
+    }
+
+    return false;
+}
+
+function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state) {
+    $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".$password."','".$state."')";
+    echo $query;
+    if (mysqli_query($link, $query)) {
+
+        echo "sucess";
         return true;
     }
 
@@ -70,6 +93,51 @@ function authenticateUser($link, $email, $password) {
         return null;
     }
 }
+
+function authenticatePatient($link, $email, $password) {
+    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".$password."'";
+
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $name = $row['name'];
+            $dob = $row['dob'];
+            $gender = $row['gender'];
+            $account_type = $row['account_type'];
+            $email = $row['email'];
+            $user = User::withData($name, $dob, $gender, $account_type, $email);
+
+            return $user;
+
+        }
+    } else {
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getAllNews($link) {
     $newslist = array();
