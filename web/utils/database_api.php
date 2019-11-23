@@ -41,13 +41,13 @@ function createUser($link, $name, $dob, $gender, $account_type, $email, $passwor
 
 function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
 
-    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".$password."'";
+    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".md5($password)."'";
     
     $result = mysqli_query($link, $query);
 
     if (mysqli_num_rows($result) == 0) {
 
-        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".$password."')";
+        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".md5($password)."')";
 
         if (mysqli_query($link, $query)) {
             return true;
@@ -64,12 +64,12 @@ function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
 
 function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state) {
 
-    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".$password."'";
+    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
     
     $result = mysqli_query($link, $query);
 
     if (mysqli_num_rows($result) == 0) {
-        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".$password."','".$state."')";
+        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."')";
         echo $query;
         if (mysqli_query($link, $query)) {
     
@@ -122,7 +122,7 @@ function authenticateUser($link, $email, $password) {
 }
 
 function authenticatePatient($link, $email, $password) {
-    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".$password."'";
+    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".md5($password)."'";
 
     $result = mysqli_query($link, $query);
 
@@ -178,7 +178,7 @@ function authenticateAdmin($link, $email, $password) {
 
 
 function authenticateCounsellor($link, $email, $password) {
-    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".$password."'";
+    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
 
     $result = mysqli_query($link, $query);
 
