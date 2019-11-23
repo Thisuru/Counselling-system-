@@ -101,20 +101,80 @@ function authenticatePatient($link, $email, $password) {
 
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
-        while($row = mysqli_fetch_assoc($result)) {
 
-            $name = $row['name'];
-            $dob = $row['dob'];
-            $gender = $row['gender'];
-            $account_type = $row['account_type'];
-            $email = $row['email'];
-            $user = User::withData($name, $dob, $gender, $account_type, $email);
+        exit('sucess');
 
-            return $user;
+        // while($row = mysqli_fetch_assoc($result)) {
 
-        }
+        //     $name = $row['name'];
+        //     $dob = $row['dob'];
+        //     $gender = $row['gender'];
+        //     $account_type = $row['account_type'];
+        //     $email = $row['email'];
+        //     $user = User::withData($name, $dob, $gender, $account_type, $email);
+
+        //     return $user;
+
+        // }
     } else {
-        return null;
+        exit('false');
+    }
+}
+
+function authenticateAdmin($link, $email, $password) {
+    $query = "SELECT * FROM admin WHERE email = '".$email."' AND password = '".$password."'";
+
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+
+        exit('sucess');
+
+        // while($row = mysqli_fetch_assoc($result)) {
+
+        //     $name = $row['name'];
+        //     $dob = $row['dob'];
+        //     $gender = $row['gender'];
+        //     $account_type = $row['account_type'];
+        //     $email = $row['email'];
+        //     $user = User::withData($name, $dob, $gender, $account_type, $email);
+
+        //     return $user;
+
+        // }
+    } else {
+        
+        exit('false');
+    }
+}
+
+
+function authenticateCounsellor($link, $email, $password) {
+    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".$password."'";
+
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+
+        exit('sucess');
+
+        // while($row = mysqli_fetch_assoc($result)) {
+
+        //     $name = $row['name'];
+        //     $dob = $row['dob'];
+        //     $gender = $row['gender'];
+        //     $account_type = $row['account_type'];
+        //     $email = $row['email'];
+        //     $user = User::withData($name, $dob, $gender, $account_type, $email);
+
+        //     return $user;
+
+        // }
+    } else {
+       
+        exit('false');
     }
 }
 

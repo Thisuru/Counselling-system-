@@ -198,19 +198,22 @@ require ('utils/database_api.php');
 if (isset($_POST['patient'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-    end($email);
+    
+    echo authenticatePatient($link, $email, $password);
 }
 
 if(isset($_POST['admin'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    echo $email;
+    
+    echo authenticateAdmin($link, $email, $password);
 }
 
 if(isset($_POST['counsellor'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    echo $email;
+
+    echo authenticateCounsellor($link, $email, $password);
 }
 
 
