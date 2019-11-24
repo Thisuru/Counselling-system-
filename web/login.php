@@ -1,4 +1,17 @@
-<?php session_start() ?>
+<?php session_start(); 
+if(isset($_SESSION['Patient'])){
+    header('Location: Questionnaire.php');
+    exit();
+}
+if(isset($_SESSION['Admin'])){
+    header('Location: Admin.php');
+    exit();
+}
+if(isset($_SESSION['Counsellor'])){
+    header('Location: newsfeed.php');
+    exit();
+}
+?>
 <html lang="en">
 
 <head>
@@ -36,11 +49,11 @@
                 
                 <div id="acntTypeDropDown" class="input-group">
                         <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="account_type" required>
+                            <select id = "account_type" name="account_type" required>
                                 <option disabled="disabled" selected="selected">Account Type</option>
-                                <option>Patient</option>
-                                <option>Counsellor</option>
-                                <option>Admin</option>
+                                <option value="patient" >Patient</option>
+                                <option value="counsellor">Counsellor</option>
+                                <option value="admin">Admin</option>
                             </select>
                             <div class="select-dropdown"></div>
                         </div>
@@ -48,15 +61,15 @@
 
                 <form method="POST">
                     <div class="input-group">
-                        <input class="input--style-3" type="email" placeholder="Email" name="email">
+                        <input id="email" class="input--style-3" type="email" placeholder="Email" name="email">
                     </div>
                     <div class="input-group">
-                        <input class="input--style-3" type="password" placeholder="Password" name="password">
-                    </div>
-                    <div class="p-t-10">
-                        <button class="btn btn--pill btn--green" name="submit" type="submit">Login</button>
+                        <input id="password" class="input--style-3" type="password" placeholder="Password" name="password">
                     </div>
                 </form>
+                <div class="p-t-10">
+                        <input type="button" class="btn btn--pill btn--green" onclick="login_user()" value="Login" />
+                </div>
                 <div style="margin-top: 10px" class="text-center p-t-136">
                     <a class="txt2" href="./register.php">
                         Don't have an account? Register.
@@ -84,9 +97,72 @@
 <!-- end document-->
 
 <script>
-    if($account_type=="Counsellor"){
-        $("#acntTypeDropDown").show()
+  account_type = ""
+ $('#account_type').change(function(){
+     var status = this.value;
+     account_type = status;
+  
+  });
+function login_user(){
+    if(account_type == ""){
+        alert("check your Inputs")
     }
+email = $('#email').val()
+password = $('#password').val()
+    if(account_type === "patient"){
+     console.log(email, password,"patient")
+            $.ajax({
+                    type: "POST",
+                    url: 'login.php',
+                    data: {
+                        "patient":1,
+                        "email" :email,
+                        "password" : password,
+                    },
+                    success: function(data){
+                        console.log('SUCCESS' + data);
+                    },
+                    fail: function (error) {
+                        console.log(error);
+                    }
+                });
+    }
+    if(account_type === "admin"){
+      console.log("admin",email,password)
+      $.ajax({
+                    type: "POST",
+                    url: 'login.php',
+                    data: {
+                        "admin":1,
+                        "email" :email,
+                        "password" : password,
+                    },
+                    success: function(data){
+                        console.log('SUCCESS' + data);
+                    },
+                    fail: function (error) {
+                        console.log(error);
+                    }
+                });
+    }
+    if(account_type === "counsellor"){
+            $.ajax({
+                    type: "POST",
+                    url: 'login.php',
+                    data: {
+                        "counsellor":1,
+                        "email" :email,
+                        "password" : password,
+                    },
+                    success: function(data){
+                        console.log('SUCCESS' + data);
+                    },
+                    fail: function (error) {
+                        console.log(error);
+                    }
+                });
+    }
+}
 </script>
 
 
@@ -97,24 +173,43 @@
  * Date: 5/12/19
  * Time: 4:22 PM
  */
-
 require ('utils/database_api.php');
-
-if (isset($_POST['submit'])) {
+// if (isset($_POST['submit'])) {
+//     $email = $_POST['email'];
+//     $password = $_POST['password'];
+//     echo $email. " -->" . $password;
+//     $user = authenticateUser($link, $email, $password);
+//     $_SESSION['user'] = serialize($user);
+//     echo "NAME IS: " . $user->getName(). " TYPE: ". $user->getAccountType();
+//     // header("location: generatenews.php");
+//     header("location: Questionnaire.php");
+//     exit();
+// }
+if (isset($_POST['patient'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    echo $email. " -->" . $password;
-
-    $user = authenticateUser($link, $email, $password);
-
-    $_SESSION['user'] = serialize($user);
-
-    echo "NAME IS: " . $user->getName(). " TYPE: ". $user->getAccountType();
-
-    // header("location: generatenews.php");
-    header("location: Questionnaire.php");
-    exit();
+    
+    $patient = authenticatePatient($link, $email, $password);
+    $_SESSION['Patient'] = '1';
+    $_SESSION['patient'] = serialize($patient);
+    exit('sucess');
 }
-
+if(isset($_POST['admin'])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    
+   $admin = authenticateAdmin($link, $email, $password);
+   $_SESSION['Admin'] = '1';
+   $_SESSION['admin'] = serialize($admin);
+   exit('sucess');
+}
+if(isset($_POST['counsellor'])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $counsellor = authenticateCounsellor($link, $email, $password);
+    $_SESSION['Counsellor'] = '1';
+    $_SESSION['counsellor'] = serialize($counsellor);
+ 
+    exit('sucess');
+}
 ?>
