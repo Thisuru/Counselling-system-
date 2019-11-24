@@ -1,15 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: tharinduranaweera
- * Date: 3/20/19
- * Time: 1:07 PM
- */
+
+<?php 
 
 require ('User.php');
 require ('NewsRecord.php');
 require ('MusicRecord.php');
 require ('ChatMessage.php');
+
+
 
 $dbhost = 'localhost';
 $dbuser = 'root';
@@ -37,6 +34,55 @@ function createUser($link, $name, $dob, $gender, $account_type, $email, $passwor
 
     return false;
 }
+
+function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
+
+    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".md5($password)."'";
+    
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) == 0) {
+
+        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".md5($password)."')";
+
+        if (mysqli_query($link, $query)) {
+            return true;
+        }
+    
+        return false;
+
+    }
+
+    return false;
+    
+
+}
+
+function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state) {
+
+    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
+    
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) == 0) {
+        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."')";
+        echo $query;
+        if (mysqli_query($link, $query)) {
+    
+            echo "sucess";
+            return true;
+        }
+    
+        return false;
+    }else{
+        return false;
+    }
+
+
+    }
+
+
+
 
 function insertNewsRecord($link, $record) {
     $query = "INSERT INTO news_feed(admin_email, admin_name, description, photo_path, date_time) VALUES('".$record->getAdminEmail()."', '".$record->getAdminName()."', '".$record->getDescription()."', '".$record->getPhotoPath()."', '".$record->getDateTime()."')";
@@ -70,6 +116,104 @@ function authenticateUser($link, $email, $password) {
         return null;
     }
 }
+
+function authenticatePatient($link, $email, $password) {
+    $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".md5($password)."'";
+
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $patient = new stdClass;
+            $patient->patientId = $row['patientId'];
+            $patient->$name = $row['name'];
+            $patient->$dob = $row['dob'];
+            $patient->$gender = $row['gender'];
+            $patient->$email = $row['email'];
+            // $user = User::withData($name, $dob, $gender, $email);
+            //  $_SESSION['user'] = $user;
+             return $patient;
+
+        }
+    } else {
+       return null;
+    }
+}
+
+function authenticateAdmin($link, $email, $password) {
+    $query = "SELECT * FROM admin WHERE email = '".$email."' AND password = '".$password."'";
+
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $admin = new stdClass;
+            $admin->adminId = $row['adminId'];
+            $admin->$email = $row['email'];
+            // $user = User::withData($name, $dob, $gender, $email);
+            //  $_SESSION['user'] = $user;
+             return $admin;
+
+        }
+    } else {
+        
+        return null;
+    }
+}
+
+
+function authenticateCounsellor($link, $email, $password) {
+    $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
+
+    $result = mysqli_query($link, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $counsellor = new stdClass;
+            $counsellor->$counsellorId = $row['counselorId'];
+            $counsellor->$name = $row['name'];
+            $counsellor->$dob = $row['dob'];
+            $counsellor->$gender = $row['gender'];
+            $counsellor->category = $row['category'];
+            $counsellor->$email = $row['email'];
+            // $user = User::withData($name, $dob, $gender, $email);
+            //  $_SESSION['user'] = $user;
+             return $counsellor;
+
+        }
+    } else {
+       
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getAllNews($link) {
     $newslist = array();
@@ -159,5 +303,119 @@ function getChatMessages($link, $counsellor, $patient){
         return null;
     }
 }
+
+function viewNotApprovedCounsellors($link){
+    $query = "SELECT * FROM counselor WHERE state = '0'";
+    $result = mysqli_query($link, $query)or die("Error");
+    $not_apprived_counsellors_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $notApprovedCounsellors = new stdClass;
+            $notApprovedCounsellors->counselorId = $row["counselorId"];
+            $notApprovedCounsellors->name = $row["name"];
+            $notApprovedCounsellors->dob = $row["dob"];
+            $notApprovedCounsellors->gender = $row["gender"];
+            $notApprovedCounsellors->email = $row["email"];
+            $notApprovedCounsellors->category = $row["category"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($not_apprived_counsellors_list, $notApprovedCounsellors);
+
+        }
+
+        // echo print_r($not_apprived_counsellors_list);
+        return  $not_apprived_counsellors_list;
+    } else {
+        return null;
+    }
+
+}
+
+function viewApprovedCounsellors($link){
+    $query = "SELECT * FROM counselor WHERE state = '1'";
+    $result = mysqli_query($link, $query)or die("Error");
+    $not_apprived_counsellors_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $notApprovedCounsellors = new stdClass;
+            $notApprovedCounsellors->counselorId = $row["counselorId"];
+            $notApprovedCounsellors->name = $row["name"];
+            $notApprovedCounsellors->dob = $row["dob"];
+            $notApprovedCounsellors->gender = $row["gender"];
+            $notApprovedCounsellors->email = $row["email"];
+            $notApprovedCounsellors->category = $row["category"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($not_apprived_counsellors_list, $notApprovedCounsellors);
+
+        }
+
+        // echo print_r($not_apprived_counsellors_list);
+        return  $not_apprived_counsellors_list;
+    } else {
+        return null;
+    }
+
+
+
+}
+
+function approveCounselor($link,$counselorId){
+
+    echo $counselorId;
+    $query = "UPDATE counselor SET state = '1' WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    return $result;
+
+
+}
+
+function unApproveCounselor($link,$counselorId){
+    echo $counselorId;
+    $query = "UPDATE counselor SET state = false WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    return $result;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>
