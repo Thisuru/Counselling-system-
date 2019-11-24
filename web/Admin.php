@@ -43,9 +43,38 @@ if ($user == null) {
 </head>
 
 <body>
-<div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
 
-<h1>hiiiiiiiiiiiiii<h1>
+<div>
+<h1>Not Approved Counselors</h1>
+<table id="not_approved" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Counsellor ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div>
+    <h1>Approved Counselors</h1>
+<table id="approved" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Counsellor ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
 
 
 </div>
@@ -59,6 +88,8 @@ if ($user == null) {
 
 
 <script src="js/global.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
 </body>
 
@@ -67,23 +98,97 @@ if ($user == null) {
 <script>
 
 $( document ).ready(function() {
-        $.ajax({
+
+    get_approved_data();
+    get_not_approved_data();
+
+
+        
+});
+
+
+function get_approved_data(){
+
+            $.ajax({
                     type: "POST",
-                    url: 'utils/patient.php',
+                    url: 'utils/admin_api.php',
+                    data: {
+                        "approved" : "1",
+                    },
+                    success: function(res){
+                        console.log(res)
+                        approved_table(res)
+                    }
+                });
+
+}
+
+function get_not_approved_data(){
+    
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/admin_api.php',
                     data: {
                         "not_approved" : "1",
                     },
                     success: function(res){
                         not_approved_table(res)
+                        get_approved_data();
                     }
                 });
-        });
 
+}
 
 
 function not_approved_table(data){
-    console.log(data)
-    console.log(data)
+    $('#not_approved').DataTable( {
+        "processing": true,
+        "data": data,
+        "columns": [
+            { "data": "counselorId" },
+            { "data": "name" },
+            { "data": "category" },
+            { "data": "email" },
+            { "data": "dob" },
+            { "data": "gender" },
+            { data: "counselorId", 
+            render: function (data, type, row) {
+          return `<input type="button" class="btn" onclick="approve(${row.counselorId})" value="Approve" />`
+        }}
+        ]
+    } );
+
+}
+
+function approved_table(data){
+    $('#approved').DataTable( {
+        "processing": true,
+        "data": data,
+        "columns": [
+            { "data": "counselorId" },
+            { "data": "name" },
+            { "data": "category" },
+            { "data": "email" },
+            { "data": "dob" },
+            { "data": "gender" },
+            { data: "counselorId", 
+            render: function (data, type, row) {
+          return `<input type="button" class="btn" onclick="unapprove(${row.counselorId})" value="Approve" />`
+        }}
+        ]
+    } );
+
+
+}
+
+
+function approve(Id){
+    console.log(Id)
+
+}
+
+function unapprove(Id){
+    console.log(Id)
 }
 
 

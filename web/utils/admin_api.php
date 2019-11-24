@@ -21,6 +21,17 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         // echo json_encode($not_approved_counsellorslist);
         // exit(json_encode($not_approved_counsellorslist));
     }
+
+    if(isset($_POST['approved'])){
+
+        $approved_counselors = viewApprovedCounsellors($link);
+
+        header('Content-Type: application/json');
+        echo json_encode($approved_counselors);
+
+    }
+
+
     
     }
 
