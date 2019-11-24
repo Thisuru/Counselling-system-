@@ -1,4 +1,20 @@
-<?php session_start() ?>
+<?php session_start(); 
+
+if(isset($_SESSION['Patient'])){
+    header('Location: Questionnaire.php');
+    exit();
+}
+if(isset($_SESSION['Admin'])){
+    header('Location: Admin.php');
+    exit();
+}
+if(isset($_SESSION['Counsellor'])){
+    header('Location: newsfeed.php');
+    exit();
+}
+
+
+?>
 <html lang="en">
 
 <head>
@@ -199,21 +215,40 @@ if (isset($_POST['patient'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     
-    echo authenticatePatient($link, $email, $password);
+    $patient = authenticatePatient($link, $email, $password);
+    $_SESSION['Patient'] = '1';
+    $_SESSION['patient'] = serialize($patient);
+
+    exit('sucess');
+
+
+
+
 }
 
 if(isset($_POST['admin'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
     
-    echo authenticateAdmin($link, $email, $password);
+   $admin = authenticateAdmin($link, $email, $password);
+   $_SESSION['Admin'] = '1';
+   $_SESSION['admin'] = serialize($admin);
+
+   exit('sucess');
+
 }
 
 if(isset($_POST['counsellor'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    echo authenticateCounsellor($link, $email, $password);
+    $counsellor = authenticateCounsellor($link, $email, $password);
+    $_SESSION['Counsellor'] = '1';
+    $_SESSION['counsellor'] = serialize($counsellor);
+ 
+    exit('sucess');
+
+
 }
 
 

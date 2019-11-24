@@ -154,7 +154,7 @@ CREATE TABLE if not exists `admin` (
 INSERT INTO `admin` (`email`, `password`) VALUES
 ('admin@gmail.com','admn123');
 
-DROP TABLE counselor;
+-- DROP TABLE counselor;
 
 CREATE TABLE if not exists `counselor`(
   `counselorId` int(11) NOT NULL auto_increment,

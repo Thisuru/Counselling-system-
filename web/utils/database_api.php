@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: tharinduranaweera
- * Date: 3/20/19
- * Time: 1:07 PM
- */
+
+<?php 
 
 require ('User.php');
 require ('NewsRecord.php');
@@ -129,22 +124,21 @@ function authenticatePatient($link, $email, $password) {
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
 
-        exit('sucess');
+        while($row = mysqli_fetch_assoc($result)) {
 
-        // while($row = mysqli_fetch_assoc($result)) {
+            $patient = new stdClass;
+            $patient->patientId = $row['patientId'];
+            $patient->$name = $row['name'];
+            $patient->$dob = $row['dob'];
+            $patient->$gender = $row['gender'];
+            $patient->$email = $row['email'];
+            // $user = User::withData($name, $dob, $gender, $email);
+            //  $_SESSION['user'] = $user;
+             return $patient;
 
-        //     $name = $row['name'];
-        //     $dob = $row['dob'];
-        //     $gender = $row['gender'];
-        //     $account_type = $row['account_type'];
-        //     $email = $row['email'];
-        //     $user = User::withData($name, $dob, $gender, $account_type, $email);
-
-        //     return $user;
-
-        // }
+        }
     } else {
-        exit('false');
+       return null;
     }
 }
 
@@ -154,25 +148,20 @@ function authenticateAdmin($link, $email, $password) {
     $result = mysqli_query($link, $query);
 
     if (mysqli_num_rows($result) > 0) {
-        // output data of each row
 
-        exit('sucess');
+        while($row = mysqli_fetch_assoc($result)) {
 
-        // while($row = mysqli_fetch_assoc($result)) {
+            $admin = new stdClass;
+            $admin->adminId = $row['adminId'];
+            $admin->$email = $row['email'];
+            // $user = User::withData($name, $dob, $gender, $email);
+            //  $_SESSION['user'] = $user;
+             return $admin;
 
-        //     $name = $row['name'];
-        //     $dob = $row['dob'];
-        //     $gender = $row['gender'];
-        //     $account_type = $row['account_type'];
-        //     $email = $row['email'];
-        //     $user = User::withData($name, $dob, $gender, $account_type, $email);
-
-        //     return $user;
-
-        // }
+        }
     } else {
         
-        exit('false');
+        return null;
     }
 }
 
@@ -183,25 +172,24 @@ function authenticateCounsellor($link, $email, $password) {
     $result = mysqli_query($link, $query);
 
     if (mysqli_num_rows($result) > 0) {
-        // output data of each row
 
-        exit('sucess');
+        while($row = mysqli_fetch_assoc($result)) {
 
-        // while($row = mysqli_fetch_assoc($result)) {
+            $counsellor = new stdClass;
+            $counsellor->$counsellorId = $row['counselorId'];
+            $counsellor->$name = $row['name'];
+            $counsellor->$dob = $row['dob'];
+            $counsellor->$gender = $row['gender'];
+            $counsellor->category = $row['category'];
+            $counsellor->$email = $row['email'];
+            // $user = User::withData($name, $dob, $gender, $email);
+            //  $_SESSION['user'] = $user;
+             return $counsellor;
 
-        //     $name = $row['name'];
-        //     $dob = $row['dob'];
-        //     $gender = $row['gender'];
-        //     $account_type = $row['account_type'];
-        //     $email = $row['email'];
-        //     $user = User::withData($name, $dob, $gender, $account_type, $email);
-
-        //     return $user;
-
-        // }
+        }
     } else {
        
-        exit('false');
+        return null;
     }
 }
 
