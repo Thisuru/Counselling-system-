@@ -7,6 +7,7 @@ require ('MusicRecord.php');
 require ('ChatMessage.php');
 
 
+
 $dbhost = 'localhost';
 $dbuser = 'root';
 $dbpass = '';
@@ -302,5 +303,41 @@ function getChatMessages($link, $counsellor, $patient){
         return null;
     }
 }
+
+function viewNotApprovedCounsellors($link){
+    $query = "SELECT * FROM counselor WHERE state = '1'";
+    $result = mysqli_query($link, $query)or die("Error");
+    $not_apprived_counsellors_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $notApprovedCounsellors = new stdClass;
+            $notApprovedCounsellors->patientId = $row["counselorId"];
+            $notApprovedCounsellors->name = $row["name"];
+            $notApprovedCounsellors->dob = $row["dob"];
+            $notApprovedCounsellors->gender = $row["gender"];
+            $notApprovedCounsellors->email = $row["email"];
+            $notApprovedCounsellors->category = $row["category"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($not_apprived_counsellors_list, $notApprovedCounsellors);
+
+        }
+
+        // echo print_r($not_apprived_counsellors_list);
+        return  $not_apprived_counsellors_list;
+    } else {
+        return null;
+    }
+
+}
+
+
+
+
 
 ?>

@@ -10,40 +10,27 @@ require ('database_api.php');
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
 
-    if (isset($_POST['get'])) {
-
-        $chatMessages = getMessages($link);
-
+    if (isset($_POST['not_approved'])) {
+        $not_approved_counsellorslist = viewNotApprovedCounsellors($link);
+        // $_SESSION['Patient'] = '1';
+        // $_SESSION['patient'] = serialize($patient);
+        // return $not_approved_counsellorslist;
         header('Content-Type: application/json');
-        echo json_encode($chatMessages);
-
-    } else {
-        $patient = $_POST;
-        foreach ($patient as $data){ 
-            echo $data;
-          }
+        echo json_encode($not_approved_counsellorslist);
+        // exit( json_encode($not_approved_counsellorslist));
+        // echo json_encode($not_approved_counsellorslist);
+        // exit(json_encode($not_approved_counsellorslist));
+    }
+    
     }
 
-}
 
-function createPatient($link, $name, $dob, $gender, $email, $password) {
-    $query = "INSERT INTO patient VALUES('".$name."', '".$dob."', '".$gender."', '".$email."', '".$password."')";
+    
 
-    if (mysqli_query($link, $query)) {
-        return true;
-    }
 
-    return false;
-}
 
-function getMessages($link) {
 
-    $counsellor = $_POST['counsellor'];
-    $patient = $_POST['patient'];
 
-    return getChatMessages($link, $counsellor, $patient);
-
-}
 
 
 ?>

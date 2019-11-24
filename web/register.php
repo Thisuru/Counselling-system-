@@ -158,7 +158,7 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
                         "email" :email,
                         "password" : password,
                         "category": $('#counsellorBox :selected').text(),
-                        "state" : 1
+                        "state" : 0
                     },
                     success: function(data){
                         console.log('SUCCESS' + data);

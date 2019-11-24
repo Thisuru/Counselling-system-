@@ -8,7 +8,6 @@
 session_start();
 
 require ('utils/database_api.php');
-
 $user = $_SESSION['Admin'];
 
 if ($user == null) {
@@ -48,6 +47,7 @@ if ($user == null) {
 
 <h1>hiiiiiiiiiiiiii<h1>
 
+
 </div>
 
 
@@ -69,20 +69,22 @@ if ($user == null) {
 $( document ).ready(function() {
         $.ajax({
                     type: "POST",
-                    url: 'Admin.php',
+                    url: 'utils/patient.php',
                     data: {
-                        "View_not_approved" = "1"
+                        "not_approved" : "1",
                     },
-                    success: function(data){
-                        console.log('SUCCESS' + data);
-                    },
-                    fail: function (error) {
-                        console.log(error);
+                    success: function(res){
+                        not_approved_table(res)
                     }
                 });
         });
 
 
 
-</script>
+function not_approved_table(data){
+    console.log(data)
+    console.log(data)
+}
 
+
+</script>
