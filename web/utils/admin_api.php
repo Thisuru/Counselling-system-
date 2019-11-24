@@ -32,6 +32,32 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     }
 
 
+    if(isset($_POST['approve_counselor'])){
+
+        $counselorId = $_POST['counselorId'];
+        
+        $result = approveCounselor($link,$counselorId);
+
+        header('Content-Type: application/json');
+
+        return $result;
+
+    }
+
+
+    if(isset($_POST['un_approve_counselor'])){
+
+        $counselorId = $_POST['counselorId'];
+        $result = unApproveCounselor($link,$counselorId);
+
+        header('Content-Type: application/json');
+        return $result;
+
+    }
+
+
+
+
     
     }
 

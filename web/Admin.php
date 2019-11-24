@@ -133,7 +133,7 @@ function get_not_approved_data(){
                     },
                     success: function(res){
                         not_approved_table(res)
-                        get_approved_data();
+    
                     }
                 });
 
@@ -173,7 +173,7 @@ function approved_table(data){
             { "data": "gender" },
             { data: "counselorId", 
             render: function (data, type, row) {
-          return `<input type="button" class="btn" onclick="unapprove(${row.counselorId})" value="Approve" />`
+          return `<input type="button" class="btn" onclick="unapprove(${row.counselorId})" value="Un_Approve" />`
         }}
         ]
     } );
@@ -183,12 +183,34 @@ function approved_table(data){
 
 
 function approve(Id){
-    console.log(Id)
+         $.ajax({
+                    type: "POST",
+                    url: 'utils/admin_api.php',
+                    data: {
+                        "approve_counselor" : "1",
+                        "counselorId" : Id
+                    },
+                    success: function(res){
+                        console.log(res)
+    
+                    }
+                });
 
 }
 
 function unapprove(Id){
-    console.log(Id)
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/admin_api.php',
+                    data: {
+                        "un_approve_counselor" : "1",
+                        "counselorId" : Id
+                    },
+                    success: function(res){
+                        console.log(res)
+    
+                    }
+                });
 }
 
 

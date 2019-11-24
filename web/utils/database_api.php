@@ -305,7 +305,7 @@ function getChatMessages($link, $counsellor, $patient){
 }
 
 function viewNotApprovedCounsellors($link){
-    $query = "SELECT * FROM counselor WHERE state = '1'";
+    $query = "SELECT * FROM counselor WHERE state = '0'";
     $result = mysqli_query($link, $query)or die("Error");
     $not_apprived_counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -337,7 +337,7 @@ function viewNotApprovedCounsellors($link){
 }
 
 function viewApprovedCounsellors($link){
-    $query = "SELECT * FROM counselor WHERE state = '0'";
+    $query = "SELECT * FROM counselor WHERE state = '1'";
     $result = mysqli_query($link, $query)or die("Error");
     $not_apprived_counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -366,7 +366,31 @@ function viewApprovedCounsellors($link){
         return null;
     }
 
+
+
 }
+
+function approveCounselor($link,$counselorId){
+
+    echo $counselorId;
+    $query = "UPDATE counselor SET state = '1' WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    return $result;
+
+
+}
+
+function unApproveCounselor($link,$counselorId){
+    echo $counselorId;
+    $query = "UPDATE counselor SET state = false WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    return $result;
+
+
+}
+
 
 
 
