@@ -150,7 +150,7 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
                         "email" :email,
                         "password" : password,
                         "category": $('#counsellorBox :selected').text(),
-                        "state" : 0
+                        "state" : false
                     },
                     success: function(data){
                         console.log('SUCCESS' + data);

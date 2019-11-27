@@ -215,30 +215,6 @@ function getChatMessages($link, $counsellor, $patient){
     }
 }
 function viewNotApprovedCounsellors($link){
-    $query = "SELECT * FROM counselor WHERE state = '1'";
-    $result = mysqli_query($link, $query)or die("Error");
-    $not_apprived_counsellors_list = array();
-    if (mysqli_num_rows($result) > 0) {
-        while($row = mysqli_fetch_assoc($result)) {
-            $notApprovedCounsellors = new stdClass;
-            $notApprovedCounsellors->counselorId = $row["counselorId"];
-            $notApprovedCounsellors->name = $row["name"];
-            $notApprovedCounsellors->dob = $row["dob"];
-            $notApprovedCounsellors->gender = $row["gender"];
-            $notApprovedCounsellors->email = $row["email"];
-            $notApprovedCounsellors->category = $row["category"];
-            
-            //  $_SESSION['user'] = $user;
-            // echo json_encode($row);
-            array_push($not_apprived_counsellors_list, $notApprovedCounsellors);
-        }
-        // echo print_r($not_apprived_counsellors_list);
-        return  $not_apprived_counsellors_list;
-    } else {
-        return null;
-    }
-}
-function viewApprovedCounsellors($link){
     $query = "SELECT * FROM counselor WHERE state = '0'";
     $result = mysqli_query($link, $query)or die("Error");
     $not_apprived_counsellors_list = array();
@@ -262,3 +238,40 @@ function viewApprovedCounsellors($link){
         return null;
     }
 }
+function viewApprovedCounsellors($link){
+    $query = "SELECT * FROM counselor WHERE state = '1'";
+    $result = mysqli_query($link, $query)or die("Error");
+    $not_apprived_counsellors_list = array();
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            $notApprovedCounsellors = new stdClass;
+            $notApprovedCounsellors->counselorId = $row["counselorId"];
+            $notApprovedCounsellors->name = $row["name"];
+            $notApprovedCounsellors->dob = $row["dob"];
+            $notApprovedCounsellors->gender = $row["gender"];
+            $notApprovedCounsellors->email = $row["email"];
+            $notApprovedCounsellors->category = $row["category"];
+            
+            //  $_SESSION['user'] = $user;
+            // echo json_encode($row);
+            array_push($not_apprived_counsellors_list, $notApprovedCounsellors);
+        }
+        // echo print_r($not_apprived_counsellors_list);
+        return  $not_apprived_counsellors_list;
+    } else {
+        return null;
+    }
+}
+function approveCounselor($link,$counselorId){
+    echo $counselorId;
+    $query = "UPDATE counselor SET state = '1' WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+    return $result;
+}
+function unApproveCounselor($link,$counselorId){
+    echo $counselorId;
+    $query = "UPDATE counselor SET state = false WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+    return $result;
+}
+?>
