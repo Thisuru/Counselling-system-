@@ -189,3 +189,13 @@ INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`) VALUES
 ('patient', '23/05/2019', 'Male', 'patient@gmail.com', 'test123');
 
 
+CREATE TABLE if not exists `patient_marks`(
+   `questionId` int(11) NOT NULL auto_increment,
+  `patientId` int(11) NOT NULL,
+  `marks` varchar(50) NOT NULL,
+  `date_time` varchar(50) NOT NULL,
+  PRIMARY KEY  (`questionId`),
+  FOREIGN KEY (patientId)
+        REFERENCES patient(patientId)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -1,7 +1,9 @@
 <?php session_start(); 
 
+require ('utils/database_api.php');
+
 if(isset($_SESSION['Patient'])){
-    header('Location: Questionnaire.php');
+    header('Location: Questionnaire2.php');
     exit();
 }
 if(isset($_SESSION['Admin'])){
@@ -122,14 +124,15 @@ password = $('#password').val()
 
             $.ajax({
                     type: "POST",
-                    url: 'login.php',
+                    url: 'utils/login_api.php',
                     data: {
                         "patient":1,
                         "email" :email,
                         "password" : password,
                     },
                     success: function(data){
-                        console.log('SUCCESS' + data);
+                        console.log(data)
+                        localStorage.setItem('testObject', JSON.stringify(data));
                     },
                     fail: function (error) {
                         console.log(error);
@@ -142,7 +145,7 @@ password = $('#password').val()
       console.log("admin",email,password)
       $.ajax({
                     type: "POST",
-                    url: 'login.php',
+                    url: 'utils/login_api.php',
                     data: {
                         "admin":1,
                         "email" :email,
@@ -160,7 +163,7 @@ password = $('#password').val()
     if(account_type === "counsellor"){
             $.ajax({
                     type: "POST",
-                    url: 'login.php',
+                    url: 'utils/login_api.php',
                     data: {
                         "counsellor":1,
                         "email" :email,
@@ -185,72 +188,3 @@ password = $('#password').val()
 </script>
 
 
-<?php
-/**
- * Created by PhpStorm.
- * User: tharinduranaweera
- * Date: 5/12/19
- * Time: 4:22 PM
- */
-
-require ('utils/database_api.php');
-
-// if (isset($_POST['submit'])) {
-//     $email = $_POST['email'];
-//     $password = $_POST['password'];
-
-//     echo $email. " -->" . $password;
-
-//     $user = authenticateUser($link, $email, $password);
-
-//     $_SESSION['user'] = serialize($user);
-
-//     echo "NAME IS: " . $user->getName(). " TYPE: ". $user->getAccountType();
-
-//     // header("location: generatenews.php");
-//     header("location: Questionnaire.php");
-//     exit();
-// }
-if (isset($_POST['patient'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    
-    $patient = authenticatePatient($link, $email, $password);
-    $_SESSION['Patient'] = '1';
-    $_SESSION['patient'] = serialize($patient);
-
-    exit('sucess');
-
-
-
-
-}
-
-if(isset($_POST['admin'])){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    
-   $admin = authenticateAdmin($link, $email, $password);
-   $_SESSION['Admin'] = '1';
-   $_SESSION['admin'] = serialize($admin);
-
-   exit('sucess');
-
-}
-
-if(isset($_POST['counsellor'])){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $counsellor = authenticateCounsellor($link, $email, $password);
-    $_SESSION['Counsellor'] = '1';
-    $_SESSION['counsellor'] = serialize($counsellor);
- 
-    exit('sucess');
-
-
-}
-
-
-
-?>

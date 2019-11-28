@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tharinduranaweera
- * Date: 6/30/19
- * Time: 10:23 PM
- */
+
 
 require ('database_api.php');
 
@@ -39,8 +34,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $result = approveCounselor($link,$counselorId);
 
         header('Content-Type: application/json');
-
-        return $result;
+        echo json_encode($result);
 
     }
 
@@ -51,7 +45,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $result = unApproveCounselor($link,$counselorId);
 
         header('Content-Type: application/json');
-        return $result;
+        echo json_encode($result);
+
 
     }
 
