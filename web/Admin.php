@@ -26,15 +26,15 @@ if ($user == null) {
     <meta name="keywords" content="Colorlib Templates">
 
     <title>User Registration</title>
-    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <!-- <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
 
-
+<!-- 
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all"> -->
+    <link href=https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css>
 
     <link href="css/main.css" rel="stylesheet" media="all">
 </head>
@@ -43,7 +43,7 @@ if ($user == null) {
 
 <div>
 <h1>Not Approved Counselors</h1>
-<table id="not_approved" class="display" style="width:100%">
+<table id="not_approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
             <tr>
                 <th>Counsellor ID</th>
@@ -59,7 +59,7 @@ if ($user == null) {
 </div>
 <div>
     <h1>Approved Counselors</h1>
-<table id="approved" class="display" style="width:100%">
+<table id="approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
             <tr>
                 <th>Counsellor ID</th>
@@ -79,15 +79,16 @@ if ($user == null) {
 
 <script src="vendor/jquery/jquery.min.js"></script>
 
-<script src="vendor/select2/select2.min.js"></script>
+<!-- <script src="vendor/select2/select2.min.js"></script>
 <script src="vendor/datepicker/moment.min.js"></script>
-<script src="vendor/datepicker/daterangepicker.js"></script>
+<script src="vendor/datepicker/daterangepicker.js"></script> -->
 
 
 <script src="js/global.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 </body>
 
 </html>
@@ -138,7 +139,7 @@ function not_approved_table(data){
             { "data": "gender" },
             { data: "counselorId", 
             render: function (data, type, row) {
-          return `<input type="button" class="btn" onclick="approve(${row.counselorId})" value="Approve" />`
+          return `<input type="button" onclick="approve(${row.counselorId})" value="Approve" />`
         }}
         ]
     } );
@@ -156,7 +157,7 @@ function approved_table(data){
             { "data": "gender" },
             { data: "counselorId", 
             render: function (data, type, row) {
-          return `<input type="button" class="btn" onclick="unapprove(${row.counselorId})" value="Un_Approve" />`
+          return `<input type="button" onclick="unapprove(${row.counselorId})" value="Un_Approve" />`
         }}
         ]
     } );

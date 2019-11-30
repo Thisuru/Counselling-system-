@@ -203,10 +203,13 @@ INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`) VALUES
 --   PRIMARY KEY  (`aid`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---  CREATE TABLE if not exists `user`(
---   `uid` int(250) NOT NULL auto_increment,
---   `username` varchar(250),
---   `totalques` int(250),
---   `answercorrect` int(250),
---   PRIMARY KEY  (`uid`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE if not exists `patient_marks`(
+   `questionId` int(11) NOT NULL auto_increment,
+  `patientId` int(11) NOT NULL,
+  `marks` varchar(50) NOT NULL,
+  `date_time` varchar(50) NOT NULL,
+  PRIMARY KEY  (`questionId`),
+  FOREIGN KEY (patientId)
+        REFERENCES patient(patientId)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

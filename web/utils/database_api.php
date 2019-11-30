@@ -85,19 +85,28 @@ function authenticateUser($link, $email, $password) {
 function authenticatePatient($link, $email, $password) {
     $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".md5($password)."'";
     $result = mysqli_query($link, $query);
+    $patient = new stdClass;
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
         while($row = mysqli_fetch_assoc($result)) {
-            $patient = new stdClass;
+
+           
             $patient->patientId = $row['patientId'];
-            $patient->$name = $row['name'];
-            $patient->$dob = $row['dob'];
-            $patient->$gender = $row['gender'];
-            $patient->$email = $row['email'];
+            $patient->name = $row['name'];
+            $patient->dob = $row['dob'];
+            $patient->gender = $row['gender'];
+            $patient->email = $row['email'];
             // $user = User::withData($name, $dob, $gender, $email);
             //  $_SESSION['user'] = $user;
-             return $patient;
+                                             
+
+
         }
+        $_SESSION['Patient'] = '1';
+        $_SESSION['Patient'] = serialize($patient);
+        header('Content-Type: application/json');      
+        echo json_encode($patient, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+        exit;   
     } else {
        return null;
     }
@@ -105,15 +114,20 @@ function authenticatePatient($link, $email, $password) {
 function authenticateAdmin($link, $email, $password) {
     $query = "SELECT * FROM admin WHERE email = '".$email."' AND password = '".$password."'";
     $result = mysqli_query($link, $query);
+    $admin = new stdClass;
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
-            $admin = new stdClass;
+
+            
             $admin->adminId = $row['adminId'];
-            $admin->$email = $row['email'];
+            $admin->email = $row['email'];
             // $user = User::withData($name, $dob, $gender, $email);
             //  $_SESSION['user'] = $user;
              return $admin;
         }
+        header('Content-Type: application/json');      
+        echo json_encode($admin, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+        exit;   
     } else {
         
         return null;
@@ -122,19 +136,25 @@ function authenticateAdmin($link, $email, $password) {
 function authenticateCounsellor($link, $email, $password) {
     $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
     $result = mysqli_query($link, $query);
+    $counsellor = new stdClass;
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
-            $counsellor = new stdClass;
-            $counsellor->$counsellorId = $row['counselorId'];
-            $counsellor->$name = $row['name'];
-            $counsellor->$dob = $row['dob'];
-            $counsellor->$gender = $row['gender'];
+
+           
+            $counsellor->counsellorId = $row['counselorId'];
+            $counsellor->name = $row['name'];
+            $counsellor->dob = $row['dob'];
+            $counsellor->gender = $row['gender'];
             $counsellor->category = $row['category'];
-            $counsellor->$email = $row['email'];
+            $counsellor->email = $row['email'];
             // $user = User::withData($name, $dob, $gender, $email);
             //  $_SESSION['user'] = $user;
-             return $counsellor;
+             
+
         }
+        header('Content-Type: application/json');      
+        echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+        exit;  
     } else {
        
         return null;
