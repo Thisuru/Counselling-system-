@@ -187,3 +187,26 @@ CREATE TABLE if not exists `patient`(
 
 INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`) VALUES
 ('patient', '23/05/2019', 'Male', 'patient@gmail.com', 'test123');
+
+--  create table if not exists `questions` (
+--    `qid` int(250) not null auto_increment,
+--   `question` varchar(250),
+--   `ans_id` int(250),
+--   PRIMARY KEY (`qid`)
+--  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--  CREATE TABLE if not exists `answers`(
+--   `aid` int(250) NOT NULL auto_increment,
+--   `answer` varchar(250),
+--   `ans_id` int(250),
+--   PRIMARY KEY  (`aid`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--  CREATE TABLE if not exists `user`(
+--   `uid` int(250) NOT NULL auto_increment,
+--   `username` varchar(250),
+--   `totalques` int(250),
+--   `answercorrect` int(250),
+--   PRIMARY KEY  (`uid`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

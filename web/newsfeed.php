@@ -1,4 +1,4 @@
-d<?php
+<?php
 /**
  * Created by PhpStorm.
  * User: tharinduranaweera
@@ -120,7 +120,7 @@ $newslist = getAllNews($link);
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
+                            <a href="/logout.php">
                                 <p>Log out</p>
                             </a>
                         </li>

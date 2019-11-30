@@ -121,6 +121,9 @@ password = $('#password').val()
                     },
                     success: function(data){
                         console.log('SUCCESS' + data);
+
+                        if (response.indexOf('SUCCESS') >= 0)
+                            window.location = 'Questionnaire.php';
                     },
                     fail: function (error) {
                         console.log(error);

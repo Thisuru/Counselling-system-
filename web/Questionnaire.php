@@ -18,6 +18,10 @@
 
 <body>
 
+<div>
+<a href="/logout.php"><p>Log out</p></a>
+</div>
+
 <div id="wrapper">
   <h1>Beck's Depression Inventory </h1>
   <p>This depression inventory can be self-scored. The scoring scale is at the end of the questionnaire.</p>
