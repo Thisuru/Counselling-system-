@@ -403,6 +403,18 @@ function unApproveCounselor($link,$counselorId){
 
 }
 
+function addMarks($link, $patientId, $marks, $date_time){
+
+    $query = "INSERT INTO patient_marks(patientId,marks,date_time)VALUES('".$patientId."','".$marks."','".$date_time."')";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    return $result;
+
+    // "INSERT INTO users VALUES('".$name."', '".$dob."', '".$gender."', '".$account_type."', '".$email."', '".$password."')";
+
+
+}
+
 
 
 

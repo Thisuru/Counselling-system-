@@ -1103,10 +1103,10 @@ function showTheResults() {
 	
 			$.ajax({
                     type: "POST",
-                    // url: 'utils/admin_api.php',
+                    url: 'utils/questions_api.php',
                     data: {
                         "questionMarks" : "1",
-                        "pationId" : patientId,
+                        "patientId" : patientId,
 						"score" : totalScore,
 						"date" : date
                     },
