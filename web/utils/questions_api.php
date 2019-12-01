@@ -18,6 +18,18 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     
     }
+
+    if (isset($_POST['get_questions'])) {
+         
+
+
+        $result = getquestions($link);
+        header('Content-Type: application/json');      
+        echo json_encode($result, JSON_PRETTY_PRINT); 
+    
+    
+    
+    }
     
 
     

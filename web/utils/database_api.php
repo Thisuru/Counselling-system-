@@ -58,24 +58,27 @@ function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
 
 }
 
-function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state) {
+function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state,$treatmentScore) {
 
     $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
     
     $result = mysqli_query($link, $query);
 
     if (mysqli_num_rows($result) == 0) {
-        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."')";
+        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."','".$treatmentScore."')";
         echo $query;
         if (mysqli_query($link, $query)) {
     
-            echo "sucess";
-            return true;
+
+            header('Content-Type: application/json');      
+            echo json_encode(true, JSON_PRETTY_PRINT); 
         }
     
-        return false;
+        header('Content-Type: application/json');      
+        echo json_encode(false, JSON_PRETTY_PRINT); 
     }else{
-        return false;
+        header('Content-Type: application/json');      
+        echo json_encode(false, JSON_PRETTY_PRINT); 
     }
 
 
@@ -411,6 +414,41 @@ function addMarks($link, $patientId, $marks, $date_time){
     return $result;
 
     // "INSERT INTO users VALUES('".$name."', '".$dob."', '".$gender."', '".$account_type."', '".$email."', '".$password."')";
+
+
+}
+
+
+function getquestions($link){
+    $query = "SELECT * FROM questionnaire";
+    $result = mysqli_query($link, $query)or die("Error");
+    $question_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $questions = new stdClass;
+            $questions->questionId = $row["questionId"];
+            $questions->question = $row["question"];
+            $questions->answer1 = $row["answer1"];
+            $questions->answer2 = $row["answer2"];
+            $questions->answer3 = $row["answer3"];
+            $questions->answer4 = $row["answer4"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($question_list, $questions);
+
+        }
+
+        // echo print_r($not_apprived_counsellors_list);
+        return  $question_list;
+    } else {
+        return null;
+    }
+
 
 
 }

@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+
+
+
+
 <html lang="en">
 
 <head>
@@ -67,9 +70,12 @@
                         <div class="rs-select2 js-select-simple select--no-search">
                             <select id="counsellorBox" name="counselor_category" required>
                                 <option disabled="disabled" selected="selected">Account Type</option>
-                                <option value>Health</option>
-                                <option value>Brain Debug</option>
-                                <option value>Physical Debug</option>
+                                <option value = 10>Normal Depression</option>
+                                <option value = 16>Mild mode Depression</option>
+                                <option value = 20>Borderline Clinical</option>
+                                <option value = 30>Moderate Depression</option>
+                                <option value = 40>Sever Depression</option>
+                                <option value = 100>Extream Depression</option>
                             </select>
                             <div class="select-dropdown"></div>
                         </div>
@@ -145,11 +151,11 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
 
     if(selectedText == "Counsellor"){
 
-
+console.log($('#counsellorBox').val())
 
         $.ajax({
                     type: "POST",
-                    url: 'register.php',
+                    url: 'utils/register_api.php',
                     data: {
                         "counselor":1,
                         "name":name,
@@ -158,10 +164,11 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
                         "email" :email,
                         "password" : password,
                         "category": $('#counsellorBox :selected').text(),
+                        "treatmentScore": $('#counsellorBox').val(),
                         "state" : false
                     },
                     success: function(data){
-                        console.log('SUCCESS' + data);
+                        console.log(data);
                     },
                     fail: function (error) {
                         console.log(error);
@@ -174,7 +181,7 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
 
         $.ajax({
                     type: "POST",
-                    url: 'register.php',
+                    url: 'utils/register_api.php',
                     data: {
                         "patient":1,
                         "name":name,
@@ -193,7 +200,7 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
          
     }
 
-    console.log(data);
+
 
      
 
@@ -204,62 +211,7 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
 
 </script>
 
-<?php
-/**
- * Created by PhpStorm.
- * User: tharinduranaweera
- * Date: 5/12/19
- * Time: 4:24 PM
- */
-require ('utils/database_api.php');
 
-if (isset($_POST['counselor'])) {
-    $name = $_POST['name'];
-    $dob = $_POST['dob'];
-    $gender = $_POST['gender'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $category = $_POST['category'];
-    $state = $_POST['state'];
-    $key = "";
-    $isSussessful = createCounselor($link,$key, $name, $dob, $gender,$category, $email, $password,$state);
-
-
-
-    echo $name;
-    // exit($name;$dob;$gender;$email;$password);
-
-    if ($isSussessful) {
-        echo "Data Insertion Successful!";
-    } else {
-        echo 'Data Insertion Failed!';
-    }
-}
-
-else if(isset($_POST['patient'])){
-    $name = $_POST['name'];
-    $dob = $_POST['dob'];
-    $gender = $_POST['gender'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $key = "";
-
-    $isSussessful = createPatient($link,$key, $name, $dob, $gender, $email, $password);
-
-    echo $name;
-    // exit($name;$dob;$gender;$email;$password);
-
-    if ($isSussessful) {
-        echo "Data Insertion Successful!";
-    } else {
-        echo 'Data Insertion Failed!';
-    }
-
-
-}
-
-
-?>
 
 
 

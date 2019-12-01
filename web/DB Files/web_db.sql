@@ -154,7 +154,7 @@ CREATE TABLE if not exists `admin` (
 INSERT INTO `admin` (`email`, `password`) VALUES
 ('admin@gmail.com','admn123');
 
--- DROP TABLE counselor;
+DROP TABLE counselor;
 
 CREATE TABLE if not exists `counselor`(
   `counselorId` int(11) NOT NULL auto_increment,
@@ -165,6 +165,7 @@ CREATE TABLE if not exists `counselor`(
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `state` BIT(1) NOT NULL,
+  `treatmentScore` int(11) NOT NULL, 
   PRIMARY KEY  (`counselorId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -199,3 +200,18 @@ CREATE TABLE if not exists `patient_marks`(
         REFERENCES patient(patientId)
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE if not exists `questionnaire`(
+  `questionId` int(11) NOT NULL auto_increment,
+  `question` varchar(250) NOT NULL,
+  `answer1` varchar(250) NOT NULL,
+  `answer2` varchar(250) NOT NULL,
+  `answer3` varchar(250) NOT NULL,
+  `answer4` varchar(250) NOT NULL, 
+  PRIMARY KEY  (`questionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `questionnaire` (`question`, `answer1`, `answer2`, `answer3`, `answer4`) VALUES
+('TestQ', 'testA1', 'testA2', 'test3', 'test4'),
+('TestQ', 'testA1', 'testA2', 'test3', 'test4');
