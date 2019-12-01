@@ -1128,18 +1128,21 @@ function showTheResults() {
 	patientId = userData['patientId']
 	 date = new Date();
 	 date = date.toUTCString();
-	 answer_to_db["date"] = date
-	 answer_to_db["patient"] = patientId
+	 data_to_db = {}
+	 data_to_db["answers"] = answer_to_db
+	 data_to_db["date"] = date
+	 data_to_db["patient"] = patientId
+	 
 	
 			$.ajax({
                     type: "POST",
                     url: 'utils/questions_api.php',
                     data: {
-                        "questionMarks" : "1",
+                        "questionMarkstoDb" : "1",
                         "patientId" : patientId,
 						"score" : totalScore,
 						"date" : date,
-						"questionData" : answer_to_db
+						"questionData" : data_to_db
                     },
                     success: function(res){
                         console.log(res)

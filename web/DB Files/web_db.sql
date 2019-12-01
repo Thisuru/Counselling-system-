@@ -191,7 +191,7 @@ INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`) VALUES
 
 
 CREATE TABLE if not exists `patient_marks`(
-   `questionId` int(11) NOT NULL auto_increment,
+   `markId` int(11) NOT NULL auto_increment,
   `patientId` int(11) NOT NULL,
   `marks` varchar(50) NOT NULL,
   `date_time` varchar(50) NOT NULL,
@@ -215,3 +215,19 @@ CREATE TABLE if not exists `questionnaire`(
 INSERT INTO `questionnaire` (`question`, `answer1`, `answer2`, `answer3`, `answer4`) VALUES
 ('TestQ', 'testA1', 'testA2', 'test3', 'test4'),
 ('TestQ', 'testA1', 'testA2', 'test3', 'test4');
+
+
+CREATE TABLE if not exists `answers`(
+  `patientId` int(11) NOT NULL,
+  `questionId` int(11) NOT NULL,
+  `date_time` varchar(250) NOT NULL,
+  `answer` varchar(250) NOT NULL,
+  `score` varchar(250) NOT NULL,
+    FOREIGN KEY (patientId)
+        REFERENCES patient(patientId)
+        ON DELETE CASCADE,
+      FOREIGN KEY (questionId)
+        REFERENCES questionnaire(questionId)
+        ON DELETE CASCADE  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+

@@ -406,14 +406,51 @@ function unApproveCounselor($link,$counselorId){
 
 }
 
-function addMarks($link, $patientId, $marks, $date_time){
+function addMarks($link, $patientId, $marks, $date_time, $to_answer_table){
+    $result = '';
+    $answers_array = $to_answer_table['answers'];
+    foreach($answers_array as $key => $value){
+        $questionId = $key;
+        foreach($value as $key2 => $value2){
+            
+            $answer = $value2;
+            $score = 0;
+         if($answer == 'a'){
+             $answer = 'answer1';
+             $score = 1;
+         }elseif($answer == 'b'){
+             $answer = 'answer2';
+             $score = 2;
+         }elseif($answer == 'c'){
+            $answer = 'answer3';
+            $score = 3;
+         }elseif($answer == 'd'){
+            $answer = 'answer4';
+            $score = 4;
+         }
+
+         $query = "INSERT INTO answers(patientId,questionId,date_time,answer,score)VALUES('".$patientId."','".$questionId."','".$date_time."','".$answer."','".$score."')";
+         $result = mysqli_query($link, $query)or die("Error");   
+         
+            // print_r($answer);
+        
+            //Here 0,1,2,3 Will be contained inside the $key variable.
+            //Code to insert the data comes here
+         }
+        
+        //Here 0,1,2,3 Will be contained inside the $key variable.
+        //Code to insert the data comes here
+     }
 
     $query = "INSERT INTO patient_marks(patientId,marks,date_time)VALUES('".$patientId."','".$marks."','".$date_time."')";
-    $result = mysqli_query($link, $query)or die("Error");
+    $result1 = mysqli_query($link, $query)or die("Error");
 
-    return $result;
 
-    // "INSERT INTO users VALUES('".$name."', '".$dob."', '".$gender."', '".$account_type."', '".$email."', '".$password."')";
+     if($result == 1 && $result1 == 1){
+        return TRUE;
+     }else{
+        return TRUE;
+     }    // "INSERT INTO users VALUES('".$name."', '".$dob."', '".$gender."', '".$account_type."', '".$email."', '".$password."')";
 
 
 }
