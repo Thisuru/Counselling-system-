@@ -1138,7 +1138,8 @@ function showTheResults() {
                         "questionMarks" : "1",
                         "patientId" : patientId,
 						"score" : totalScore,
-						"date" : date
+						"date" : date,
+						"questionData" : answer_to_db
                     },
                     success: function(res){
                         console.log(res)
