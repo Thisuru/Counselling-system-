@@ -188,20 +188,6 @@ CREATE TABLE if not exists `patient`(
 INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`) VALUES
 ('patient', '23/05/2019', 'Male', 'patient@gmail.com', 'test123');
 
---  create table if not exists `questions` (
---    `qid` int(250) not null auto_increment,
---   `question` varchar(250),
---   `ans_id` int(250),
---   PRIMARY KEY (`qid`)
---  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
---  CREATE TABLE if not exists `answers`(
---   `aid` int(250) NOT NULL auto_increment,
---   `answer` varchar(250),
---   `ans_id` int(250),
---   PRIMARY KEY  (`aid`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE if not exists `patient_marks`(
    `questionId` int(11) NOT NULL auto_increment,
@@ -213,3 +199,17 @@ CREATE TABLE if not exists `patient_marks`(
         REFERENCES patient(patientId)
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE if not exists `questionnaire`(
+   `qNo` int(11) NOT NULL auto_increment,
+  `question` varchar(50) NOT NULL,
+  `answerOne` varchar(50) NOT NULL,
+  `answerTwo` varchar(50) NOT NULL,
+  `answerThree` varchar(50) NOT NULL,
+  `answerFour` varchar(50) NOT NULL,
+  PRIMARY KEY  (`qNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `questionnaire` (`qNo`, `question`, `answerOne`, `answerTwo`, `answerThree`, `answerFour`) VALUES
+('1', 'Question 1', 'I do not feel sad', 'I feel sad', 'I am sad all the time and I can not snap out of it', 'I am so sad and unhappy that I can not stand it');

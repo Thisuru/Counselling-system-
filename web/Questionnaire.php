@@ -23,7 +23,7 @@
 </div>
 
 <div id="wrapper">
-  <h1>Beck's Depression Inventory </h1>
+  <h1>Questionnaire</h1>
   <p>This depression inventory can be self-scored. The scoring scale is at the end of the questionnaire.</p>
   
   <form id="quiz">
@@ -38,10 +38,10 @@
     I feel sad 
     </label><br />
     <label><input type="radio" name="q1" value="c3">
-    I am sad all the time and I can't snap out of it. 
+    I am sad all the time and I can not snap out of it. 
     </label><br />
     <label><input type="radio" name="q1" value="c4">
-    I am so sad and unhappy that I can't stand it. 
+    I am so sad and unhappy that I can not stand it. 
     </label><br />
 
     <!-- Question 2 -->
