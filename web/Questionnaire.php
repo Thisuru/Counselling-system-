@@ -83,10 +83,10 @@
     I get as much satisfaction out of things as I used to. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
-    I don't enjoy things the way I used to.
+    I don not enjoy things the way I used to.
     </label><br />
     <label><input type="radio" name="q4" value="c3">
-    I don't get real satisfaction out of anything anymore
+    I don not get real satisfaction out of anything anymore
     </label><br />
     <label><input type="radio" name="q4" value="c4">
     I am dissatisfied or bored with everything. 
@@ -96,7 +96,7 @@
     <h2>Question 5</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't feel particularly guilty 
+    I don not feel particularly guilty 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I feel guilty a good part of the time
@@ -112,7 +112,7 @@
     <h2>Question 6</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't feel I am being punished. 
+    I don not feel I am being punished. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I feel I may be punished. 
@@ -128,7 +128,7 @@
     <h2>Question 7</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't feel disappointed in myself. 
+    I don not feel disappointed in myself. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I am disappointed in myself. 
@@ -144,7 +144,7 @@
     <h2>Question 8</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't feel I am any worse than anybody else. 
+    I don not feel I am any worse than anybody else. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I am critical of myself for my weaknesses or mistakes
@@ -160,7 +160,7 @@
     <h2>Question 9</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't have any thoughts of killing myself. 
+    I don not have any thoughts of killing myself. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I have thoughts of killing myself, but I would not carry them out
@@ -176,7 +176,7 @@
     <h2>Question 10</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't cry any more than usual. 
+    I don not cry any more than usual. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I cry more now than I used to. 
@@ -185,7 +185,7 @@
     I cry all the time now. 
     </label><br />
     <label><input type="radio" name="q4" value="c4">
-    I used to be able to cry, but now I can't cry even though I want to. 
+    I used to be able to cry, but now I can not cry even though I want to. 
     </label><br />
 
     <!-- Question 11 -->
@@ -210,7 +210,7 @@
     <label><input type="radio" name="q4" value="c1">
     I have not lost interest in other people.  
     </label><br />
-    <label><input type="radio" name="q4" value="c2">
+    <label><input type="radio" name="q4" value="c2"> 
     I am less interested in other people than I used to be.  
     </label><br />
     <label><input type="radio" name="q4" value="c3">
@@ -233,14 +233,14 @@
     I have greater difficulty in making decisions more than I used to. 
     </label><br />
     <label><input type="radio" name="q4" value="c4">
-    I can't make decisions at all anymore. 
+    I can not make decisions at all anymore. 
     </label><br />
 
     <!-- Question 14 -->
     <h2>Question 14</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't feel that I look any worse than I used to. 
+    I don not feel that I look any worse than I used to. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I am worried that I am looking old or unattractive. 
@@ -265,7 +265,7 @@
     I have to push myself very hard to do anything. 
     </label><br />
     <label><input type="radio" name="q4" value="c4">
-    I can't do any work at all. 
+    I can not do any work at all. 
     </label><br />
 
     <!-- Question 16 -->
@@ -275,7 +275,7 @@
     I can sleep as well as usual. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
-    I don't sleep as well as I used to. 
+    I don not sleep as well as I used to. 
     </label><br />
     <label><input type="radio" name="q4" value="c3">
     I wake up 1-2 hours earlier than usual and find it hard to get back to sleep. 
@@ -288,7 +288,7 @@
     <h2>Question 17</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I don't get more tired than usual. 
+    I don not get more tired than usual. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I get tired more easily than I used to. 
@@ -320,7 +320,7 @@
     <h2>Question 19</h2>
     <!-- Choices for the fourth question -->
     <label><input type="radio" name="q4" value="c1">
-    I haven't lost much weight, if any, lately. 
+    I haven not lost much weight, if any, lately. 
     </label><br />
     <label><input type="radio" name="q4" value="c2">
     I have lost more than five pounds. 
@@ -342,7 +342,7 @@
     I am worried about physical problems like aches, pains, upset stomach, or constipation.  
     </label><br />
     <label><input type="radio" name="q4" value="c3">
-    I am very worried about physical problems and it's hard to think of much else. 
+    I am very worried about physical problems and it is hard to think of much else. 
     </label><br />
     <label><input type="radio" name="q4" value="c4">
     I am so worried about my physical problems that I cannot think of anything else. 
