@@ -170,7 +170,17 @@ password = $('#password').val()
                         "password" : password,
                     },
                     success: function(data){
-                        console.log('SUCCESS' + data);
+                        if(data === null){
+                            window.alert("Your not Registered")
+                            // location.href = "login.php";
+                        }
+                        else if(data===false){
+                            window.alert("Wait For Admin's Approval")
+                        }
+                        else if(data !== null){
+                            localStorage.setItem('testObject', JSON.stringify(data));
+                            location.href = "counselor.php";
+                        }
                     },
                     fail: function (error) {
                         console.log(error);

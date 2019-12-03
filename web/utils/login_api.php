@@ -44,8 +44,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $password = $_POST['password'];
     
         $counsellor = authenticateCounsellor($link, $email, $password);
-        $_SESSION['Counsellor'] = '1';
-        $_SESSION['counsellor'] = serialize($counsellor);
      
         header('Content-Type: application/json');      
         echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.

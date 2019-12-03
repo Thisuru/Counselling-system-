@@ -186,6 +186,7 @@ function authenticateCounsellor($link, $email, $password) {
 
     $result = mysqli_query($link, $query);
     $counsellor = new stdClass;
+    $approoved = True;
     if (mysqli_num_rows($result) > 0) {
 
         while($row = mysqli_fetch_assoc($result)) {
@@ -197,16 +198,27 @@ function authenticateCounsellor($link, $email, $password) {
             $counsellor->gender = $row['gender'];
             $counsellor->category = $row['category'];
             $counsellor->email = $row['email'];
+            $counsellor->state = $row['state'];
+            if($row['state'] == "0"){
+                $approoved = false;
+            }
             // $user = User::withData($name, $dob, $gender, $email);
             //  $_SESSION['user'] = $user;
              
 
         }
-        $_SESSION['counsellor'] = '1';
-        $_SESSION['counsellor'] = serialize($counsellor);
-        header('Content-Type: application/json');      
-        echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
-        exit;  
+        if($approoved==true){
+            $_SESSION['counsellor'] = '1';
+            $_SESSION['counsellor'] = serialize($counsellor);
+            header('Content-Type: application/json');      
+            echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+            exit;
+        }else{
+            header('Content-Type: application/json');      
+            echo json_encode($approoved, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+            exit;
+        }
+  
     } else {
        
         return null;
