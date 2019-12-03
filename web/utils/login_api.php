@@ -34,7 +34,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
        $_SESSION['admin'] = serialize($admin);
        header('Content-Type: application/json');      
        echo json_encode($admin, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
-       exit;
+    //    exit($admin);
        
     
     }
@@ -49,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
      
         header('Content-Type: application/json');      
         echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
-        exit;
+        exit($counsellor);
     
     
     }

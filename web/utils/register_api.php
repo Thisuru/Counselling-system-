@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $state = $_POST['state'];
         $treatmentScore = $_POST['treatmentScore'];
         $key = "";
-        $isSussessful = createCounselor($link,$key, $name, $dob, $gender,$category, $email, $password,$state,$treatmentScore);
+        $isSussessful = createCounselor($link,$key, $name, $dob, $gender,$category, $email, $password,false,$treatmentScore);
     
     
     

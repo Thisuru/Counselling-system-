@@ -34,8 +34,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $result = approveCounselor($link,$counselorId);
 
         header('Content-Type: application/json');
-        echo json_encode($result);
-
+        exit($result);
     }
 
 
@@ -45,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $result = unApproveCounselor($link,$counselorId);
 
         header('Content-Type: application/json');
-        echo json_encode($result);
+        exit($result);
 
 
     }

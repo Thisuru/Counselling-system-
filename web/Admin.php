@@ -192,7 +192,7 @@ function approve(Id){
                         "counselorId" : Id
                     },
                     success: function(res){
-                        console.log(res)
+                        window.location.reload();
     
                     }
                 });
@@ -208,7 +208,7 @@ function unapprove(Id){
                         "counselorId" : Id
                     },
                     success: function(res){
-                        console.log(res)
+                        window.location.reload();
     
                     }
                 });

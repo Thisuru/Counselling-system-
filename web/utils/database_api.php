@@ -142,8 +142,8 @@ function authenticatePatient($link, $email, $password) {
 
 
         }
-        $_SESSION['Patient'] = '1';
-        $_SESSION['Patient'] = serialize($patient);
+        $_SESSION['patient'] = '1';
+        $_SESSION['patient'] = serialize($patient);
         header('Content-Type: application/json');      
         echo json_encode($patient, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
         exit;   
@@ -169,6 +169,8 @@ function authenticateAdmin($link, $email, $password) {
              return $admin;
 
         }
+        $_SESSION['admin'] = '1';
+        $_SESSION['admin'] = serialize($admin);
         header('Content-Type: application/json');      
         echo json_encode($admin, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
         exit;   
@@ -200,6 +202,8 @@ function authenticateCounsellor($link, $email, $password) {
              
 
         }
+        $_SESSION['counsellor'] = '1';
+        $_SESSION['counsellor'] = serialize($counsellor);
         header('Content-Type: application/json');      
         echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
         exit;  
@@ -320,7 +324,7 @@ function getChatMessages($link, $counsellor, $patient){
 }
 
 function viewNotApprovedCounsellors($link){
-    $query = "SELECT * FROM counselor WHERE state = '0'";
+    $query = "SELECT * FROM counselor WHERE state = false";
     $result = mysqli_query($link, $query)or die("Error");
     $not_apprived_counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -352,7 +356,7 @@ function viewNotApprovedCounsellors($link){
 }
 
 function viewApprovedCounsellors($link){
-    $query = "SELECT * FROM counselor WHERE state = '1'";
+    $query = "SELECT * FROM counselor WHERE state = true";
     $result = mysqli_query($link, $query)or die("Error");
     $not_apprived_counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -387,8 +391,8 @@ function viewApprovedCounsellors($link){
 
 function approveCounselor($link,$counselorId){
 
-    echo $counselorId;
-    $query = "UPDATE counselor SET state = '1' WHERE counselorId = $counselorId";
+
+    $query = "UPDATE counselor SET state = true WHERE counselorId = $counselorId";
     $result = mysqli_query($link, $query)or die("Error");
 
     return $result;
@@ -397,7 +401,7 @@ function approveCounselor($link,$counselorId){
 }
 
 function unApproveCounselor($link,$counselorId){
-    echo $counselorId;
+
     $query = "UPDATE counselor SET state = false WHERE counselorId = $counselorId";
     $result = mysqli_query($link, $query)or die("Error");
 
