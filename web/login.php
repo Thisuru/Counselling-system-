@@ -131,8 +131,8 @@ password = $('#password').val()
                         "password" : password,
                     },
                     success: function(data){
-                        location.href = "Questionnaire2.php";
                         localStorage.setItem('testObject', JSON.stringify(data));
+                        location.href = "Questionnaire2.php";
                     },
                     fail: function (error) {
                         console.log(error);

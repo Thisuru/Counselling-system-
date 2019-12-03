@@ -2,7 +2,7 @@
 
 session_start();
 require ('utils/database_api.php');
-$user = $_SESSION['Patient'];
+$user = $_SESSION['patient'];
 // $user = $_SESSION['patient'];
 
 if ($user == null) {

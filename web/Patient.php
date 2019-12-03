@@ -137,7 +137,7 @@ function approved_table(data){
             { "data": "gender" },
             { data: "counselorId", 
             render: function (data, type, row) {
-            return `<input type="button" onclick="add_counselor(${row.counselorId})" value="Un_Approve" />`
+            return `<input type="button" onclick="add_counselor(${row.counselorId})" value="Select" />`
 
         }}
         ]
