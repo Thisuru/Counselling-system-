@@ -553,6 +553,75 @@ function patientSelectCounsellor($link, $counsellorId,$patientId,$date){
     
 }
 
+function viewCounsellorProfile($link,$counselorId){
+
+
+    $query = "SELECT * FROM counselor WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    $counsellor = new stdClass;
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+           
+            $counsellor->counsellorId = $row['counselorId'];
+            $counsellor->name = $row['name'];
+            $counsellor->dob = $row['dob'];
+            $counsellor->gender = $row['gender'];
+            $counsellor->category = $row['category'];
+            $counsellor->email = $row['email'];
+            $counsellor->state = $row['state'];
+             
+
+        }
+ 
+            header('Content-Type: application/json');      
+            echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+            exit;
+    }else {
+       
+        return null;
+    }
+
+
+}
+
+function viewPatients($link,$counselorId){
+
+    $query = "SELECT * FROM patient INNER JOIN patient_select_counselor ON patient.patientId=patient_select_counselor.patientId and patient_select_counselor.counselorId = 2";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    $patient_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $Patients = new stdClass;
+            $Counsellors->counselorId = $row["counselorId"];
+            $Counsellors->name = $row["name"];
+            $Counsellors->dob = $row["dob"];
+            $Counsellors->gender = $row["gender"];
+            $Counsellors->email = $row["email"];
+            $Counsellors->category = $row["category"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($counsellors_list, $Counsellors);
+
+        }
+
+       
+        return  $counsellors_list;
+    } else {
+        return null;
+    }
+  
+
+}
+
 
 
 

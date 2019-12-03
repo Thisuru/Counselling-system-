@@ -109,17 +109,35 @@ $( document ).ready(function() {
 });
 
 function view_profile(){
+
+    var userData = JSON.parse(localStorage.getItem('testObject'));
+	counsellorId = userData['counsellorId']
+
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/counselor_api.php',
+                    data: {
+                        "profile" : "1",
+                        "counselorId" : counsellorId
+                    },
+                    success: function(res){
+                        console.log(res)
+                        
+                    }
+                });
     
 }
 
 
 function view_selected_patients(){
-
+    var userData = JSON.parse(localStorage.getItem('testObject'));
+	counsellorId = userData['counsellorId']
             $.ajax({
                     type: "POST",
                     url: 'utils/admin_api.php',
                     data: {
-                        "approved" : "1",
+                        "view_patients" : "1",
+                        "counselorId" : counsellorId
                     },
                     success: function(res){
                         console.log(res)
