@@ -491,6 +491,53 @@ function getquestions($link){
 }
 
 
+function getSelectedCounsellors($link,$counsellor_type){
+    $query = "SELECT * FROM counselor WHERE state = '0' AND category = '".$counsellor_type."' ";
+    $result = mysqli_query($link, $query)or die("Error");
+    $counsellors_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $Counsellors = new stdClass;
+            $Counsellors->counselorId = $row["counselorId"];
+            $Counsellors->name = $row["name"];
+            $Counsellors->dob = $row["dob"];
+            $Counsellors->gender = $row["gender"];
+            $Counsellors->email = $row["email"];
+            $Counsellors->category = $row["category"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($counsellors_list, $Counsellors);
+
+        }
+
+       
+        return  $counsellors_list;
+    } else {
+        return null;
+    }
+
+
+
+}
+
+function patientSelectCounsellor($link, $counsellorId,$patientId,$date){
+    $query = "INSERT INTO patient_select_counselor(patientId,counselorId,date_time) VALUES ('".$patientId."', '".$counsellorId."', '".$date."')";
+    if (mysqli_query($link, $query)) {
+        // header('Content-Type: application/json');
+        // echo json_encode(true, JSON_PRETTY_PRINT); 
+        return true;
+    }else{
+        return false;
+    }
+    
+}
+
+
 
 
 

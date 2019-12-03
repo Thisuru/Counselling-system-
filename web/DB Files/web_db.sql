@@ -231,3 +231,17 @@ CREATE TABLE if not exists `answers`(
         ON DELETE CASCADE  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE if not exists `patient_select_counselor`(
+  `patientId` int(11) NOT NULL,
+  `counselorId` int(11) NOT NULL,
+  `date_time` varchar(50) NOT NULL,
+    FOREIGN KEY (patientId)
+        REFERENCES patient(patientId)
+        ON DELETE CASCADE,
+      FOREIGN KEY (counselorId)
+        REFERENCES counselor(counselorId)
+        ON DELETE CASCADE  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+

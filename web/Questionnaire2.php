@@ -226,7 +226,7 @@ ul {
 </div>
 
 <footer id="footer">
-	<p>I Love You.</p>
+	<p>.....</p>
 </footer>
 
 
@@ -1125,6 +1125,7 @@ function showTheResults() {
 	numWrong.textContent = wrong;
 	numTotal.textContent = total;
 	var userData = JSON.parse(localStorage.getItem('testObject'));
+	localStorage.setItem('totalMarks',totalScore)
 	patientId = userData['patientId']
 	 date = new Date();
 	 date = date.toUTCString();
@@ -1145,7 +1146,9 @@ function showTheResults() {
 						"questionData" : data_to_db
                     },
                     success: function(res){
-                        console.log(res)
+                        if(res === true){
+							location.href = "Patient.php";
+						}
     
                     }
                 });
