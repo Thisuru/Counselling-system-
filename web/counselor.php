@@ -134,14 +134,14 @@ function view_selected_patients(){
 	counsellorId = userData['counsellorId']
             $.ajax({
                     type: "POST",
-                    url: 'utils/admin_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
                         "view_patients" : "1",
                         "counselorId" : counsellorId
                     },
                     success: function(res){
                         console.log(res)
-                        approved_table(res)
+                        
                     }
                 });
 

@@ -30,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $result = viewPatients($link,$counselorId);
 
         header('Content-Type: application/json');
-        exit($result);
+        echo json_encode($result);
 
 
     }

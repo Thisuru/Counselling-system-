@@ -598,23 +598,23 @@ function viewPatients($link,$counselorId){
         while($row = mysqli_fetch_assoc($result)) {
 
             $Patients = new stdClass;
-            $Counsellors->counselorId = $row["counselorId"];
-            $Counsellors->name = $row["name"];
-            $Counsellors->dob = $row["dob"];
-            $Counsellors->gender = $row["gender"];
-            $Counsellors->email = $row["email"];
-            $Counsellors->category = $row["category"];
+            $Patients->patientId = $row["patientId"];
+            $Patients->name = $row["name"];
+            $Patients->dob = $row["dob"];
+            $Patients->gender = $row["gender"];
+            $Patients->email = $row["email"];
+            $Patients->date_time = $row["date_time"];
             
             //  $_SESSION['user'] = $user;
 
             // echo json_encode($row);
 
-            array_push($counsellors_list, $Counsellors);
+            array_push($patient_list, $Patients);
 
         }
 
        
-        return  $counsellors_list;
+        return  $patient_list;
     } else {
         return null;
     }
