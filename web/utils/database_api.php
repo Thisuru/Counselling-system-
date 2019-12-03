@@ -148,7 +148,10 @@ function authenticatePatient($link, $email, $password) {
         echo json_encode($patient, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
         exit;   
     } else {
-       return null;
+        header('Content-Type: application/json');      
+        echo json_encode(false, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+        exit; 
+    
     }
 }
 
