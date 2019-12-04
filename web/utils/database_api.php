@@ -38,12 +38,12 @@ function createUser($link, $name, $dob, $gender, $account_type, $email, $passwor
 function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
 
     $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".md5($password)."'";
-    
+    $IsAnswered = false;
     $result = mysqli_query($link, $query);
 
     if (mysqli_num_rows($result) == 0) {
 
-        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".md5($password)."')";
+        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".md5($password)."','".$IsAnswered."')";
 
         if (mysqli_query($link, $query)) {
             return true;
@@ -68,17 +68,12 @@ function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $pas
         $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."','".$treatmentScore."')";
         echo $query;
         if (mysqli_query($link, $query)) {
-    
-
-            header('Content-Type: application/json');      
-            echo json_encode(true, JSON_PRETTY_PRINT); 
+            return true;
         }
     
-        header('Content-Type: application/json');      
-        echo json_encode(false, JSON_PRETTY_PRINT); 
+        return false;
     }else{
-        header('Content-Type: application/json');      
-        echo json_encode(false, JSON_PRETTY_PRINT); 
+        return false;
     }
 
 
@@ -136,8 +131,7 @@ function authenticatePatient($link, $email, $password) {
             $patient->dob = $row['dob'];
             $patient->gender = $row['gender'];
             $patient->email = $row['email'];
-            // $user = User::withData($name, $dob, $gender, $email);
-            //  $_SESSION['user'] = $user;
+            $patient->isAnswered = $row['IsAnswered'];
                                              
 
 
@@ -462,6 +456,8 @@ function addMarks($link, $patientId, $marks, $date_time, $to_answer_table){
      }
 
     $query = "INSERT INTO patient_marks(patientId,marks,date_time)VALUES('".$patientId."','".$marks."','".$date_time."')";
+    $result1 = mysqli_query($link, $query)or die("Error");
+    $query = "UPDATE patient SET IsAnswered = true WHERE patientId = $patientId";
     $result1 = mysqli_query($link, $query)or die("Error");
 
 

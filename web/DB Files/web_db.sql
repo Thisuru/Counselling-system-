@@ -154,7 +154,7 @@ CREATE TABLE if not exists `admin` (
 INSERT INTO `admin` (`email`, `password`) VALUES
 ('admin@gmail.com','admn123');
 
-DROP TABLE counselor;
+-- DROP TABLE counselor;
 
 CREATE TABLE if not exists `counselor`(
   `counselorId` int(11) NOT NULL auto_increment,
@@ -176,6 +176,8 @@ CREATE TABLE if not exists `counselor`(
 INSERT INTO `counselor` (`name`, `dob`, `gender`, `category`, `email`, `password`,`state`) VALUES
 ('counselor', '23/05/2019', 'Male', 'category1', 'counselor@gmail.com', 'test123','0');
 
+-- DROP TABLE `patient`
+
 CREATE TABLE if not exists `patient`(
   `patientId` int(11) NOT NULL auto_increment,
   `name` varchar(50) NOT NULL,
@@ -183,11 +185,12 @@ CREATE TABLE if not exists `patient`(
   `gender` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
+  `IsAnswered` BIT(1) NOT NULL,
   PRIMARY KEY  (`patientId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`) VALUES
-('patient', '23/05/2019', 'Male', 'patient@gmail.com', 'test123');
+INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`,`IsAnswered`) VALUES
+('patient', '23/05/2019', 'Male', 'patient@gmail.com', 'test123',false);
 
 
 CREATE TABLE if not exists `patient_marks`(
@@ -195,7 +198,7 @@ CREATE TABLE if not exists `patient_marks`(
   `patientId` int(11) NOT NULL,
   `marks` varchar(50) NOT NULL,
   `date_time` varchar(50) NOT NULL,
-  PRIMARY KEY  (`questionId`),
+  PRIMARY KEY  (`markId`),
   FOREIGN KEY (patientId)
         REFERENCES patient(patientId)
         ON DELETE CASCADE

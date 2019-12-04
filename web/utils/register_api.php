@@ -26,7 +26,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             header('Content-Type: application/json');      
             echo json_encode(true, JSON_PRETTY_PRINT); 
         } else {
-            echo 'Data Insertion Failed!';
+            header('Content-Type: application/json');      
+            echo json_encode(false, JSON_PRETTY_PRINT); 
         }
     }
     
@@ -48,7 +49,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
             echo json_encode(true, JSON_PRETTY_PRINT); 
             exit;
         } else {
-            echo 'Data Insertion Failed!';
+            header('Content-Type: application/json');  
+            echo json_encode(false, JSON_PRETTY_PRINT); 
             exit;
         }
     

@@ -133,7 +133,12 @@ password = $('#password').val()
                     success: function(data){
                         if(data !== false){
                             localStorage.setItem('testObject', JSON.stringify(data));
-                        location.href = "Questionnaire2.php";
+                            if(data['isAnswered'] === '0'){
+                                location.href = "Questionnaire2.php";
+                            }else if(data['isAnswered'] === '1'){
+                                location.href = "Patient.php";
+                            }
+                            
                         }else{
                             window.alert("check email or password")
                         }

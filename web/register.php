@@ -168,7 +168,12 @@ console.log($('#counsellorBox').val())
                         "state" : false
                     },
                     success: function(data){
-                        console.log(data);
+                        if(data == true){
+                            location.href = "login.php";
+                        }
+                        if(data == false){
+                            window.alert("User Already Registered !!")
+                        }
                     },
                     fail: function (error) {
                         console.log(error);
@@ -191,7 +196,12 @@ console.log($('#counsellorBox').val())
                         "password" : password
                     },
                     success: function(data){
-                        console.log('SUCCESS' + data);
+                        if(data == true){
+                            location.href = "login.php";
+                        }
+                        if(data == false){
+                            window.alert("User Already Registered !!")
+                        }
                     },
                     fail: function (error) {
                         console.log(error);
