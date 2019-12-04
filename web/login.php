@@ -139,7 +139,7 @@ password = $('#password').val()
                                 var counselorData = JSON.parse(localStorage.getItem('counselorObject'));
                                 
                                 if(counselorData === null){
-                                    window.alert("counselor is offline...")
+                                    window.alert("request for appointment")
                                 }else{
                                     location.href = "livechat.php";
                                 }
