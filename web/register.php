@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+
+
+
+
 <html lang="en">
 
 <head>
@@ -67,9 +70,12 @@
                         <div class="rs-select2 js-select-simple select--no-search">
                             <select id="counsellorBox" name="counselor_category" required>
                                 <option disabled="disabled" selected="selected">Account Type</option>
-                                <option value>Health</option>
-                                <option value>Brain Debug</option>
-                                <option value>Physical Debug</option>
+                                <option value = 10>Normal Depression</option>
+                                <option value = 16>Mild mode Depression</option>
+                                <option value = 20>Borderline Clinical</option>
+                                <option value = 30>Moderate Depression</option>
+                                <option value = 40>Sever Depression</option>
+                                <option value = 100>Extream Depression</option>
                             </select>
                             <div class="select-dropdown"></div>
                         </div>
@@ -139,9 +145,12 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
     alert("check your inputs")
 }
     if(selectedText == "Counsellor"){
+
+console.log($('#counsellorBox').val())
+
         $.ajax({
                     type: "POST",
-                    url: 'register.php',
+                    url: 'utils/register_api.php',
                     data: {
                         "counselor":1,
                         "name":name,
@@ -150,10 +159,16 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
                         "email" :email,
                         "password" : password,
                         "category": $('#counsellorBox :selected').text(),
+                        "treatmentScore": $('#counsellorBox').val(),
                         "state" : false
                     },
                     success: function(data){
-                        console.log('SUCCESS' + data);
+                        if(data == true){
+                            location.href = "login.php";
+                        }
+                        if(data == false){
+                            window.alert("User Already Registered !!")
+                        }
                     },
                     fail: function (error) {
                         console.log(error);
@@ -163,7 +178,7 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
     }else{
         $.ajax({
                     type: "POST",
-                    url: 'register.php',
+                    url: 'utils/register_api.php',
                     data: {
                         "patient":1,
                         "name":name,
@@ -173,7 +188,12 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
                         "password" : password
                     },
                     success: function(data){
-                        console.log('SUCCESS' + data);
+                        if(data == true){
+                            location.href = "login.php";
+                        }
+                        if(data == false){
+                            window.alert("User Already Registered !!")
+                        }
                     },
                     fail: function (error) {
                         console.log(error);
@@ -181,7 +201,9 @@ if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" ||
                 });
          
     }
-    console.log(data);
+
+
+
      
             
 }
@@ -230,3 +252,13 @@ else if(isset($_POST['patient'])){
     }
 }
 ?>
+
+
+
+
+
+
+
+
+
+

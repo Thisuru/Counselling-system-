@@ -6,12 +6,15 @@
  * Time: 9:57 AM
  */
 session_start();
+
 require ('utils/database_api.php');
-$user = $_SESSION['Admin'];
+$user = $_SESSION['counsellor'];
+
 if ($user == null) {
     header("location: 404.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -94,100 +97,145 @@ if ($user == null) {
 </html>
 
 <script>
+
 $( document ).ready(function() {
-    get_approved_data();
-    get_not_approved_data();
+
+    view_profile()
+    view_selected_patients();
+    
+
+
         
 });
-function get_approved_data(){
+
+function view_profile(){
+
+    var userData = JSON.parse(localStorage.getItem('testObject'));
+	counsellorId = userData['counsellorId']
+
             $.ajax({
                     type: "POST",
-                    url: 'utils/admin_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
-                        "approved" : "1",
+                        "profile" : "1",
+                        "counselorId" : counsellorId
                     },
                     success: function(res){
                         console.log(res)
-                        approved_table(res)
+                        
                     }
                 });
-}
-function get_not_approved_data(){
     
+}
+
+
+function view_selected_patients(){
+    var userData = JSON.parse(localStorage.getItem('testObject'));
+	counsellorId = userData['counsellorId']
             $.ajax({
                     type: "POST",
-                    url: 'utils/admin_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
-                        "not_approved" : "1",
+                        "view_patients" : "1",
+                        "counselorId" : counsellorId
                     },
                     success: function(res){
-                        not_approved_table(res)
-    
+                        console.log(res)
+                        
                     }
                 });
+
 }
-function not_approved_table(data){
-    $('#not_approved').DataTable( {
-        "processing": true,
-        "data": data,
-        "columns": [
-            { "data": "counselorId" },
-            { "data": "name" },
-            { "data": "category" },
-            { "data": "email" },
-            { "data": "dob" },
-            { "data": "gender" },
-            { data: "counselorId", 
-            render: function (data, type, row) {
-          return `<input type="button" onclick="approve(${row.counselorId})" value="Approve" />`
-        }}
-        ]
-    } );
-}
-function approved_table(data){
-    $('#approved').DataTable( {
-        "processing": true,
-        "data": data,
-        "columns": [
-            { "data": "counselorId" },
-            { "data": "name" },
-            { "data": "category" },
-            { "data": "email" },
-            { "data": "dob" },
-            { "data": "gender" },
-            { data: "counselorId", 
-            render: function (data, type, row) {
-          return `<input type="button" onclick="unapprove(${row.counselorId})" value="Un_Approve" />`
-        }}
-        ]
-    } );
-}
-function approve(Id){
-         $.ajax({
-                    type: "POST",
-                    url: 'utils/admin_api.php',
-                    data: {
-                        "approve_counselor" : "1",
-                        "counselorId" : Id
-                    },
-                    success: function(res){
-                        window.location.reload();
+
+// function get_not_approved_data(){
     
-                    }
-                });
-}
-function unapprove(Id){
-            $.ajax({
-                    type: "POST",
-                    url: 'utils/admin_api.php',
-                    data: {
-                        "un_approve_counselor" : "1",
-                        "counselorId" : Id
-                    },
-                    success: function(res){
-                        window.location.reload();
+//             $.ajax({
+//                     type: "POST",
+//                     url: 'utils/admin_api.php',
+//                     data: {
+//                         "not_approved" : "1",
+//                     },
+//                     success: function(res){
+//                         not_approved_table(res)
     
-                    }
-                });
-}
+//                     }
+//                 });
+
+// }
+
+
+// function not_approved_table(data){
+//     $('#not_approved').DataTable( {
+//         "processing": true,
+//         "data": data,
+//         "columns": [
+//             { "data": "counselorId" },
+//             { "data": "name" },
+//             { "data": "category" },
+//             { "data": "email" },
+//             { "data": "dob" },
+//             { "data": "gender" },
+//             { data: "counselorId", 
+//             render: function (data, type, row) {
+//           return `<input type="button" onclick="approve(${row.counselorId})" value="Approve" />`
+//         }}
+//         ]
+//     } );
+
+// }
+
+// function approved_table(data){
+//     $('#approved').DataTable( {
+//         "processing": true,
+//         "data": data,
+//         "columns": [
+//             { "data": "counselorId" },
+//             { "data": "name" },
+//             { "data": "category" },
+//             { "data": "email" },
+//             { "data": "dob" },
+//             { "data": "gender" },
+//             { data: "counselorId", 
+//             render: function (data, type, row) {
+//           return `<input type="button" onclick="unapprove(${row.counselorId})" value="Un_Approve" />`
+//         }}
+//         ]
+//     } );
+
+
+// }
+
+
+// function approve(Id){
+//          $.ajax({
+//                     type: "POST",
+//                     url: 'utils/admin_api.php',
+//                     data: {
+//                         "approve_counselor" : "1",
+//                         "counselorId" : Id
+//                     },
+//                     success: function(res){
+//                         window.location.reload();
+    
+//                     }
+//                 });
+
+// }
+
+// function unapprove(Id){
+//             $.ajax({
+//                     type: "POST",
+//                     url: 'utils/admin_api.php',
+//                     data: {
+//                         "un_approve_counselor" : "1",
+//                         "counselorId" : Id
+//                     },
+//                     success: function(res){
+//                         window.location.reload();
+    
+//                     }
+//                 });
+// }
+
+
 </script>

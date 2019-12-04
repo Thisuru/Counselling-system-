@@ -26,10 +26,12 @@ function createUser($link, $name, $dob, $gender, $account_type, $email, $passwor
 }
 function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
     $query = "SELECT * FROM patient WHERE email = '".$email."' AND password = '".md5($password)."'";
-    
+    $IsAnswered = false;
     $result = mysqli_query($link, $query);
     if (mysqli_num_rows($result) == 0) {
-        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".md5($password)."')";
+
+        $query = "INSERT INTO patient VALUES('".$key."','".$name."', '".$dob."', '".$gender."', '".$email."', '".md5($password)."','".$IsAnswered."')";
+
         if (mysqli_query($link, $query)) {
             return true;
         }
@@ -39,16 +41,16 @@ function createPatient($link,$key, $name, $dob, $gender, $email, $password) {
     return false;
     
 }
-function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state) {
+
+function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $password,$state,$treatmentScore) {
+
     $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
     
     $result = mysqli_query($link, $query);
     if (mysqli_num_rows($result) == 0) {
-        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."')";
+        $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."','".$treatmentScore."')";
         echo $query;
         if (mysqli_query($link, $query)) {
-    
-            echo "sucess";
             return true;
         }
     
@@ -96,19 +98,21 @@ function authenticatePatient($link, $email, $password) {
             $patient->dob = $row['dob'];
             $patient->gender = $row['gender'];
             $patient->email = $row['email'];
-            // $user = User::withData($name, $dob, $gender, $email);
-            //  $_SESSION['user'] = $user;
+            $patient->isAnswered = $row['IsAnswered'];
                                              
 
 
         }
-        $_SESSION['Patient'] = '1';
-        $_SESSION['Patient'] = serialize($patient);
+        $_SESSION['patient'] = '1';
+        $_SESSION['patient'] = serialize($patient);
         header('Content-Type: application/json');      
         echo json_encode($patient, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
         exit;   
     } else {
-       return null;
+        header('Content-Type: application/json');      
+        echo json_encode(false, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+        exit; 
+    
     }
 }
 function authenticateAdmin($link, $email, $password) {
@@ -125,6 +129,8 @@ function authenticateAdmin($link, $email, $password) {
             //  $_SESSION['user'] = $user;
              return $admin;
         }
+        $_SESSION['admin'] = '1';
+        $_SESSION['admin'] = serialize($admin);
         header('Content-Type: application/json');      
         echo json_encode($admin, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
         exit;   
@@ -137,6 +143,7 @@ function authenticateCounsellor($link, $email, $password) {
     $query = "SELECT * FROM counselor WHERE email = '".$email."' AND password = '".md5($password)."'";
     $result = mysqli_query($link, $query);
     $counsellor = new stdClass;
+    $approoved = True;
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
 
@@ -147,14 +154,27 @@ function authenticateCounsellor($link, $email, $password) {
             $counsellor->gender = $row['gender'];
             $counsellor->category = $row['category'];
             $counsellor->email = $row['email'];
+            $counsellor->state = $row['state'];
+            if($row['state'] == "0"){
+                $approoved = false;
+            }
             // $user = User::withData($name, $dob, $gender, $email);
             //  $_SESSION['user'] = $user;
              
 
         }
-        header('Content-Type: application/json');      
-        echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
-        exit;  
+        if($approoved==true){
+            $_SESSION['counsellor'] = '1';
+            $_SESSION['counsellor'] = serialize($counsellor);
+            header('Content-Type: application/json');      
+            echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+            exit;
+        }else{
+            header('Content-Type: application/json');      
+            echo json_encode($approoved, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+            exit;
+        }
+  
     } else {
        
         return null;
@@ -235,7 +255,7 @@ function getChatMessages($link, $counsellor, $patient){
     }
 }
 function viewNotApprovedCounsellors($link){
-    $query = "SELECT * FROM counselor WHERE state = '0'";
+    $query = "SELECT * FROM counselor WHERE state = false";
     $result = mysqli_query($link, $query)or die("Error");
     $not_apprived_counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -259,7 +279,7 @@ function viewNotApprovedCounsellors($link){
     }
 }
 function viewApprovedCounsellors($link){
-    $query = "SELECT * FROM counselor WHERE state = '1'";
+    $query = "SELECT * FROM counselor WHERE state = true";
     $result = mysqli_query($link, $query)or die("Error");
     $not_apprived_counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -283,15 +303,246 @@ function viewApprovedCounsellors($link){
     }
 }
 function approveCounselor($link,$counselorId){
-    echo $counselorId;
-    $query = "UPDATE counselor SET state = '1' WHERE counselorId = $counselorId";
+
+
+    $query = "UPDATE counselor SET state = true WHERE counselorId = $counselorId";
     $result = mysqli_query($link, $query)or die("Error");
     return $result;
 }
 function unApproveCounselor($link,$counselorId){
-    echo $counselorId;
+
     $query = "UPDATE counselor SET state = false WHERE counselorId = $counselorId";
     $result = mysqli_query($link, $query)or die("Error");
     return $result;
 }
+
+function addMarks($link, $patientId, $marks, $date_time, $to_answer_table){
+    $result = '';
+    $answers_array = $to_answer_table['answers'];
+    foreach($answers_array as $key => $value){
+        $questionId = $key;
+        foreach($value as $key2 => $value2){
+            
+            $answer = $value2;
+            $score = 0;
+         if($answer == 'a'){
+             $answer = 'answer1';
+             $score = 1;
+         }elseif($answer == 'b'){
+             $answer = 'answer2';
+             $score = 2;
+         }elseif($answer == 'c'){
+            $answer = 'answer3';
+            $score = 3;
+         }elseif($answer == 'd'){
+            $answer = 'answer4';
+            $score = 4;
+         }
+
+         $query = "INSERT INTO answers(patientId,questionId,date_time,answer,score)VALUES('".$patientId."','".$questionId."','".$date_time."','".$answer."','".$score."')";
+         $result = mysqli_query($link, $query)or die("Error");   
+         
+            // print_r($answer);
+        
+            //Here 0,1,2,3 Will be contained inside the $key variable.
+            //Code to insert the data comes here
+         }
+        
+        //Here 0,1,2,3 Will be contained inside the $key variable.
+        //Code to insert the data comes here
+     }
+
+    $query = "INSERT INTO patient_marks(patientId,marks,date_time)VALUES('".$patientId."','".$marks."','".$date_time."')";
+    $result1 = mysqli_query($link, $query)or die("Error");
+    $query = "UPDATE patient SET IsAnswered = true WHERE patientId = $patientId";
+    $result1 = mysqli_query($link, $query)or die("Error");
+
+
+     if($result == 1 && $result1 == 1){
+        return TRUE;
+     }else{
+        return TRUE;
+     }    // "INSERT INTO users VALUES('".$name."', '".$dob."', '".$gender."', '".$account_type."', '".$email."', '".$password."')";
+
+
+}
+
+
+function getquestions($link){
+    $query = "SELECT * FROM questionnaire";
+    $result = mysqli_query($link, $query)or die("Error");
+    $question_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $questions = new stdClass;
+            $questions->questionId = $row["questionId"];
+            $questions->question = $row["question"];
+            $questions->answer1 = $row["answer1"];
+            $questions->answer2 = $row["answer2"];
+            $questions->answer3 = $row["answer3"];
+            $questions->answer4 = $row["answer4"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($question_list, $questions);
+
+        }
+
+        // echo print_r($not_apprived_counsellors_list);
+        return  $question_list;
+    } else {
+        return null;
+    }
+
+
+
+}
+
+
+function getSelectedCounsellors($link,$counsellor_type){
+    $query = "SELECT * FROM counselor WHERE state = '0' AND category = '".$counsellor_type."' ";
+    $result = mysqli_query($link, $query)or die("Error");
+    $counsellors_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $Counsellors = new stdClass;
+            $Counsellors->counselorId = $row["counselorId"];
+            $Counsellors->name = $row["name"];
+            $Counsellors->dob = $row["dob"];
+            $Counsellors->gender = $row["gender"];
+            $Counsellors->email = $row["email"];
+            $Counsellors->category = $row["category"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($counsellors_list, $Counsellors);
+
+        }
+
+       
+        return  $counsellors_list;
+    } else {
+        return null;
+    }
+
+
+
+}
+
+function patientSelectCounsellor($link, $counsellorId,$patientId,$date){
+    $query = "INSERT INTO patient_select_counselor(patientId,counselorId,date_time) VALUES ('".$patientId."', '".$counsellorId."', '".$date."')";
+    if (mysqli_query($link, $query)) {
+        // header('Content-Type: application/json');
+        // echo json_encode(true, JSON_PRETTY_PRINT); 
+        return true;
+    }else{
+        return false;
+    }
+    
+}
+
+function viewCounsellorProfile($link,$counselorId){
+
+
+    $query = "SELECT * FROM counselor WHERE counselorId = $counselorId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    $counsellor = new stdClass;
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+           
+            $counsellor->counsellorId = $row['counselorId'];
+            $counsellor->name = $row['name'];
+            $counsellor->dob = $row['dob'];
+            $counsellor->gender = $row['gender'];
+            $counsellor->category = $row['category'];
+            $counsellor->email = $row['email'];
+            $counsellor->state = $row['state'];
+             
+
+        }
+ 
+            header('Content-Type: application/json');      
+            echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+            exit;
+    }else {
+       
+        return null;
+    }
+
+
+}
+
+function viewPatients($link,$counselorId){
+
+    $query = "SELECT * FROM patient INNER JOIN patient_select_counselor ON patient.patientId=patient_select_counselor.patientId and patient_select_counselor.counselorId = 2";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    $patient_list = array();
+    if (mysqli_num_rows($result) > 0) {
+
+        while($row = mysqli_fetch_assoc($result)) {
+
+            $Patients = new stdClass;
+            $Patients->patientId = $row["patientId"];
+            $Patients->name = $row["name"];
+            $Patients->dob = $row["dob"];
+            $Patients->gender = $row["gender"];
+            $Patients->email = $row["email"];
+            $Patients->date_time = $row["date_time"];
+            
+            //  $_SESSION['user'] = $user;
+
+            // echo json_encode($row);
+
+            array_push($patient_list, $Patients);
+
+        }
+
+       
+        return  $patient_list;
+    } else {
+        return null;
+    }
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
