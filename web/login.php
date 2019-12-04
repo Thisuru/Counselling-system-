@@ -136,7 +136,13 @@ password = $('#password').val()
                             if(data['isAnswered'] === '0'){
                                 location.href = "Questionnaire2.php";
                             }else if(data['isAnswered'] === '1'){
-                                location.href = "Patient.php";
+                                var counselorData = JSON.parse(localStorage.getItem('counselorObject'));
+                                
+                                if(counselorData === null){
+                                    window.alert("counselor is offline...")
+                                }else{
+                                    location.href = "livechat.php";
+                                }
                             }
                             
                         }else{
@@ -188,7 +194,7 @@ password = $('#password').val()
                             window.alert("Wait For Admin's Approval")
                         }
                         else if(data !== null){
-                            localStorage.setItem('testObject', JSON.stringify(data));
+                            localStorage.setItem('counselorObject', JSON.stringify(data));
                             location.href = "counselor.php";
                         }
                     },

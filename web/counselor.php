@@ -110,7 +110,7 @@ $( document ).ready(function() {
 
 function view_profile(){
 
-    var userData = JSON.parse(localStorage.getItem('testObject'));
+    var userData = JSON.parse(localStorage.getItem('counselorObject'));
 	counsellorId = userData['counsellorId']
 
             $.ajax({
@@ -130,7 +130,7 @@ function view_profile(){
 
 
 function view_selected_patients(){
-    var userData = JSON.parse(localStorage.getItem('testObject'));
+    var userData = JSON.parse(localStorage.getItem('counselorObject'));
 	counsellorId = userData['counsellorId']
             $.ajax({
                     type: "POST",

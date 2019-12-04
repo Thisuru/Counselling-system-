@@ -66,7 +66,6 @@ function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $pas
 
     if (mysqli_num_rows($result) == 0) {
         $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."','".$treatmentScore."')";
-        echo $query;
         if (mysqli_query($link, $query)) {
             return true;
         }
@@ -588,7 +587,7 @@ function viewCounsellorProfile($link,$counselorId){
 
 function viewPatients($link,$counselorId){
 
-    $query = "SELECT * FROM patient INNER JOIN patient_select_counselor ON patient.patientId=patient_select_counselor.patientId and patient_select_counselor.counselorId = 2";
+    $query = "SELECT * FROM patient INNER JOIN patient_select_counselor ON patient.patientId=patient_select_counselor.patientId and patient_select_counselor.counselorId = $counselorId";
     $result = mysqli_query($link, $query)or die("Error");
 
     $patient_list = array();
