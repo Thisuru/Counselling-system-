@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+
+
+
+
 <html lang="en">
 
 <head>
@@ -33,17 +36,17 @@
             <div class="card-heading"></div>
             <div class="card-body">
                 <h2 class="title">Registration Info</h2>
-                <form method="POST">
+                <form>
                     <div class="input-group">
-                        <input class="input--style-3" type="text" placeholder="Name" name="name" required>
+                        <input id="name" class="input--style-3" type="text" placeholder="Name" name="name" required>
                     </div>
                     <div class="input-group">
-                        <input class="input--style-3 js-datepicker" type="text" placeholder="Birthdate" name="birthday" required>
+                        <input id="dob" class="input--style-3 js-datepicker" type="text" placeholder="Birthdate" name="birthday" required>
                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
                     </div>
                     <div class="input-group">
-                        <div class="rs-select2 js-select-simple select--no-search">
-                            <select name="gender" required>
+                        <div id='gender' class="rs-select2 js-select-simple select--no-search">
+                            <select id='gender' name="gender" required>
                                 <option disabled="disabled" selected="selected">Gender</option>
                                 <option>Male</option>
                                 <option>Female</option>
@@ -65,26 +68,29 @@
 
                     <div id="counsellorDiv" class="input-group">
                         <div class="rs-select2 js-select-simple select--no-search">
-                            <select id="counsellorBox" onchange="counsellorSelect();" name="account_type" required>
+                            <select id="counsellorBox" name="counselor_category" required>
                                 <option disabled="disabled" selected="selected">Account Type</option>
-                                <option value>Health</option>
-                                <option value>Brain Debug</option>
-                                <option value>Physical Debug</option>
+                                <option value = 10>Normal Depression</option>
+                                <option value = 16>Mild mode Depression</option>
+                                <option value = 20>Borderline Clinical</option>
+                                <option value = 30>Moderate Depression</option>
+                                <option value = 40>Sever Depression</option>
+                                <option value = 100>Extream Depression</option>
                             </select>
                             <div class="select-dropdown"></div>
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <input class="input--style-3" type="email" placeholder="Email" name="email" required>
+                        <input id="email" class="input--style-3" type="email" placeholder="Email" name="email" required>
                     </div>
                     <div class="input-group">
-                        <input class="input--style-3" type="password" placeholder="Password" name="password" required>
-                    </div>
-                    <div class="p-t-10">
-                        <button class="btn btn--pill btn--green" name="submit" type="submit">Register</button>
+                        <input id="password" class="input--style-3" type="password" placeholder="Password" name="password" required>
                     </div>
                 </form>
+                <div class="p-t-10">
+                        <input type="button" class="btn btn--pill btn--green" onclick="registerUser()" value="Register" />
+                </div>
 
                 <div style="margin-top: 10px" class="text-center p-t-136">
                     <a class="txt2" href="./login.php">
@@ -107,10 +113,10 @@
 <!-- Main JS-->
 <script src="js/global.js"></script>
 
+
 </body>
 
 </html>
-<!-- end document-->
 
 <script>
 
@@ -128,32 +134,100 @@ function changeFuncCounsellor(){
     }
 }
 
-</script>
+function registerUser(){
+   
+    var data;
+    var name = $('#name').val()
+    var dob =  $('#dob').val()
+    var gender = $('#gender :selected').text();
+    var selectedText = $('#selectBox :selected').text();
+    var email = $('#email').val()
+    var password = $('#password').val()
+    var url = '';
 
-<?php
-/**
- * Created by PhpStorm.
- * User: tharinduranaweera
- * Date: 5/12/19
- * Time: 4:24 PM
- */
-require ('utils/database_api.php');
-
-if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $dob = $_POST['birthday'];
-    $gender = $_POST['gender'];
-    $account_type = $_POST['account_type'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $isSussessful = createUser($link, $name, $dob, $gender, $account_type, $email, $password);
-
-    if ($isSussessful) {
-        echo "Data Insertion Successful!";
-    } else {
-        echo 'Data Insertion Failed!';
-    }
+if(name == "" || dob == "" || gender == "" || selectedText=="" || email == "" || password == ""){
+    alert("check your inputs")
 }
 
-?>
+    if(selectedText == "Counsellor"){
+
+console.log($('#counsellorBox').val())
+
+        $.ajax({
+                    type: "POST",
+                    url: 'utils/register_api.php',
+                    data: {
+                        "counselor":1,
+                        "name":name,
+                        "dob" : dob,
+                        "gender" : gender,
+                        "email" :email,
+                        "password" : password,
+                        "category": $('#counsellorBox :selected').text(),
+                        "treatmentScore": $('#counsellorBox').val(),
+                        "state" : false
+                    },
+                    success: function(data){
+                        if(data == true){
+                            location.href = "login.php";
+                        }
+                        if(data == false){
+                            window.alert("User Already Registered !!")
+                        }
+                    },
+                    fail: function (error) {
+                        console.log(error);
+                    }
+                });
+
+
+        
+    }else{
+
+        $.ajax({
+                    type: "POST",
+                    url: 'utils/register_api.php',
+                    data: {
+                        "patient":1,
+                        "name":name,
+                        "dob" : dob,
+                        "gender" : gender,
+                        "email" :email,
+                        "password" : password
+                    },
+                    success: function(data){
+                        if(data == true){
+                            location.href = "login.php";
+                        }
+                        if(data == false){
+                            window.alert("User Already Registered !!")
+                        }
+                    },
+                    fail: function (error) {
+                        console.log(error);
+                    }
+                });
+         
+    }
+
+
+
+     
+
+
+            
+
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

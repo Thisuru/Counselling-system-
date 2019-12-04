@@ -154,7 +154,7 @@ CREATE TABLE if not exists `admin` (
 INSERT INTO `admin` (`email`, `password`) VALUES
 ('admin@gmail.com','admn123');
 
-DROP TABLE counselor;
+-- DROP TABLE counselor;
 
 CREATE TABLE if not exists `counselor`(
   `counselorId` int(11) NOT NULL auto_increment,
@@ -165,6 +165,7 @@ CREATE TABLE if not exists `counselor`(
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `state` BIT(1) NOT NULL,
+  `treatmentScore` int(11) NOT NULL, 
   PRIMARY KEY  (`counselorId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -175,6 +176,8 @@ CREATE TABLE if not exists `counselor`(
 INSERT INTO `counselor` (`name`, `dob`, `gender`, `category`, `email`, `password`,`state`) VALUES
 ('counselor', '23/05/2019', 'Male', 'category1', 'counselor@gmail.com', 'test123','0');
 
+-- DROP TABLE `patient`
+
 CREATE TABLE if not exists `patient`(
   `patientId` int(11) NOT NULL auto_increment,
   `name` varchar(50) NOT NULL,
@@ -182,10 +185,66 @@ CREATE TABLE if not exists `patient`(
   `gender` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
+  `IsAnswered` BIT(1) NOT NULL,
   PRIMARY KEY  (`patientId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`) VALUES
-('patient', '23/05/2019', 'Male', 'patient@gmail.com', 'test123');
+INSERT INTO `patient` (`name`, `dob`, `gender`, `email`, `password`,`IsAnswered`) VALUES
+('patient', '23/05/2019', 'Male', 'patient@gmail.com', 'test123',false);
+
+
+CREATE TABLE if not exists `patient_marks`(
+   `markId` int(11) NOT NULL auto_increment,
+  `patientId` int(11) NOT NULL,
+  `marks` varchar(50) NOT NULL,
+  `date_time` varchar(50) NOT NULL,
+  PRIMARY KEY  (`markId`),
+  FOREIGN KEY (patientId)
+        REFERENCES patient(patientId)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE if not exists `questionnaire`(
+  `questionId` int(11) NOT NULL auto_increment,
+  `question` varchar(250) NOT NULL,
+  `answer1` varchar(250) NOT NULL,
+  `answer2` varchar(250) NOT NULL,
+  `answer3` varchar(250) NOT NULL,
+  `answer4` varchar(250) NOT NULL, 
+  PRIMARY KEY  (`questionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `questionnaire` (`question`, `answer1`, `answer2`, `answer3`, `answer4`) VALUES
+('TestQ', 'testA1', 'testA2', 'test3', 'test4'),
+('TestQ', 'testA1', 'testA2', 'test3', 'test4');
+
+
+CREATE TABLE if not exists `answers`(
+  `patientId` int(11) NOT NULL,
+  `questionId` int(11) NOT NULL,
+  `date_time` varchar(250) NOT NULL,
+  `answer` varchar(250) NOT NULL,
+  `score` varchar(250) NOT NULL,
+    FOREIGN KEY (patientId)
+        REFERENCES patient(patientId)
+        ON DELETE CASCADE,
+      FOREIGN KEY (questionId)
+        REFERENCES questionnaire(questionId)
+        ON DELETE CASCADE  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE if not exists `patient_select_counselor`(
+  `patientId` int(11) NOT NULL,
+  `counselorId` int(11) NOT NULL,
+  `date_time` varchar(50) NOT NULL,
+    FOREIGN KEY (patientId)
+        REFERENCES patient(patientId)
+        ON DELETE CASCADE,
+      FOREIGN KEY (counselorId)
+        REFERENCES counselor(counselorId)
+        ON DELETE CASCADE  
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 
