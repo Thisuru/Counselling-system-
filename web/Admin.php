@@ -43,7 +43,7 @@ if ($user == null) {
 </head>
 
 <body>
-
+<input id="updateState" type="button" class="Button" onclick="logout()"  value="Logout" />
 <div>
 <h1>Not Approved Counselors</h1>
 <table id="not_approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
@@ -212,6 +212,24 @@ function unapprove(Id){
     
                     }
                 });
+}
+
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
 }
 
 

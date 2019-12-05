@@ -45,7 +45,7 @@ if ($user == null) {
 </head>
 
 <body>
-
+<input id="updateState" type="button" class="Button" onclick="logout()"  value="Logout" />
     <h1>Selected Patients</h1>
 <table id="approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
@@ -301,6 +301,24 @@ function updateIsAnsweredState(){
 
 function to_chat(){
     location.href = 'livechat.php';
+}
+
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
 }
 
 

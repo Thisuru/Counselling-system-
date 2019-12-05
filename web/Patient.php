@@ -10,12 +10,13 @@
     <meta name="keywords" content="Colorlib Templates">
 
     <title>User Registration</title>
-
-    <link href="css/main.css" rel="stylesheet" media="all">
+<!-- 
+    <link href="css/main.css" rel="stylesheet" media="all"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-
+<input id="updateState" type="button" class="Button" onclick="logout()"  value="Logout" />
 
 
 <div>
@@ -172,6 +173,24 @@ function add_counselor(counselorId){
                 });
 
         }
+
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
+}
 
 
 </script>
