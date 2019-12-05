@@ -242,6 +242,8 @@ function authenticateCounsellor($link, $email, $password) {
 
 
 
+
+
 function getAllNews($link) {
     $newslist = array();
     $query = "SELECT * FROM news_feed";
@@ -696,6 +698,15 @@ function getAllAnsewers($link,$patientId, $date_time){
    
    }
 
+   function updateIsAnsweredState($link,$patientId){
+
+    $query = "UPDATE patient SET IsAnswered = false WHERE patientId = $patientId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    return $result;
+
+    
+}
 
 
 

@@ -9,12 +9,12 @@ require ('utils/database_api.php');
  * Time: 11:13 PM
  */
 
-$user = unserialize($_SESSION['user']);
+// $user = unserialize($_SESSION['user']);
 
-if ($user == null) {
-    header("location: 404.php");
-    exit();
-}
+// if ($user == null) {
+//     header("location: 404.php");
+//     exit();
+// }
 
 ?>
 

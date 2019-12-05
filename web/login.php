@@ -137,12 +137,12 @@ password = $('#password').val()
                                 location.href = "Questionnaire2.php";
                             }else if(data['isAnswered'] === '1'){
                                 var counselorData = JSON.parse(localStorage.getItem('counselorObject'));
-                                
-                                if(counselorData === null){
-                                    window.alert("request for appointment")
-                                }else{
-                                    location.href = "livechat.php";
-                                }
+                                location.href = "Patient.php";
+                                // if(counselorData === null){
+                                //     window.alert("request for appointment")
+                                // }else{
+                                //     location.href = "livechat.php";
+                                // }
                             }
                             
                         }else{

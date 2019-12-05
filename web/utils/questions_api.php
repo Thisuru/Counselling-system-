@@ -46,31 +46,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     }
 
-    if (isset($_POST['view_distinct'])) {
-            
-        $patientId	= $_POST['patientId'];
-
-        $result = getDistinctAnswerTimes($link, $patientId);
-        header('Content-Type: application/json');      
-        echo json_encode($result, JSON_PRETTY_PRINT); 
-    
-    
-    
-    }
 
 
-    if (isset($_POST['view_answers'])) {
-            
-        $patientId	= $_POST['patientId'];
-        $date_time = $_POST['date_time'];
 
-        $result = getAllAnsewers($link, $patientId, $date_time);
-        header('Content-Type: application/json');      
-        echo json_encode($result, JSON_PRETTY_PRINT); 
-    
-    
-    
-    }
+
+
+
     
 
     

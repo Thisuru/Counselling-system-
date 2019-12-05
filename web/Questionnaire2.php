@@ -1185,6 +1185,7 @@ function get_questionnaire(){
                         "get_questions" : "1",
                     },
                     success: function(res){
+						console.log(res)
 						quizQuestions(res);
 						determineSequence();
 						getNextQuestion();

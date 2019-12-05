@@ -84,7 +84,7 @@ if ($user == null) {
             </tr>
         </thead>
     </table>
-    <input type="button" class="Button" onclick="updateIsAnsweredState()"  value="enable Questionaire" />
+    <input id="updateState" type="button" class="Button" onclick="updateIsAnsweredState()"  value="enable Questionaire" />
     <input type="button" class="Button" onclick="to_chat()"  value="Chat" />
 </div>
 
@@ -213,7 +213,7 @@ function viewPastScores(Id){
     patientId = Id;
          $.ajax({
                     type: "POST",
-                    url: 'utils/questions_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
                         "view_distinct" : "1",
                         "patientId" : Id
@@ -251,7 +251,7 @@ function viewQuestionaire(e,pId){
     console.log(date_time,pId)
             $.ajax({
                     type: "POST",
-                    url: 'utils/questions_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
                         "view_answers" : "1",
                         "date_time" : date_time,
@@ -284,18 +284,23 @@ function viewAnswers(data){
 function updateIsAnsweredState(){
     $.ajax({
                     type: "POST",
-                    url: 'utils/questions_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
-                        "view_answers" : "1",
-                        "date_time" : date_time,
-                        "patientId" : pId
+                        "updateIsAnsweredState" : "1",
+                        "patientId" : patientId
                     },
                     success: function(res){
-                        console.log(res)
-                        viewAnswers(res)
+                        if(res === true){
+                            $('#updateState').hide();
+                        }
+                        
     
                     }
                 });
+}
+
+function to_chat(){
+    location.href = 'livechat.php';
 }
 
 

@@ -11,10 +11,10 @@ require ('utils/database_api.php');
 
 $user = unserialize($_SESSION['user']);
 
-if ($user == null) {
-    header("location: 404.php");
-    exit();
-}
+// if ($user == null) {
+//     header("location: 404.php");
+//     exit();
+// }
 
 $music_records = getMusic($link);
 
@@ -130,7 +130,7 @@ function showMusic($music_records, $category) {
                     </a>
                 </li>
                 <li>
-                    <a href="livechat">
+                    <a href="livechat.php">
                         <i class="pe-7s-chat"></i>
                         <p>Live Chat</p>
                     </a>
