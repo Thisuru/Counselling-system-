@@ -83,7 +83,7 @@ function get_counsellors(){
 
     var counsellor_type  = '';      
     var totalScore = JSON.parse(localStorage.getItem('totalMarks'));
-
+    console.log(totalScore)
     if(totalScore<=10){
         counsellor_type = "Normal Depression"
     }
@@ -102,6 +102,8 @@ function get_counsellors(){
     if(totalScore > 40){
         counsellor_type = "Extream Depression";
     }
+
+    console.log(counsellor_type)
 
             $.ajax({
                     type: "POST",

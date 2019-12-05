@@ -44,38 +44,47 @@ if ($user == null) {
 
 <body>
 
-<div>
-<h1>Not Approved Counselors</h1>
-<table id="not_approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
-        <thead>
-            <tr>
-                <th>Counsellor ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Email</th>
-                <th>DOB</th>
-                <th>Gender</th>
-                <th></th>
-            </tr>
-        </thead>
-    </table>
-</div>
-<div>
-    <h1>Approved Counselors</h1>
+    <h1>Selected Patients</h1>
 <table id="approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
             <tr>
                 <th>Counsellor ID</th>
                 <th>Name</th>
-                <th>Category</th>
                 <th>Email</th>
                 <th>DOB</th>
                 <th>Gender</th>
+                <th>Selected Date And Time</th>
                 <th></th>
             </tr>
         </thead>
     </table>
 
+    <div>
+<h1>Patient Past Scores</h1>
+<table id="PastScores" class="table table-striped table-bordered" style="width:100%" style="width:100%">
+        <thead>
+            <tr>
+                <th>Date And Time</th>
+                <th>Marks</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div>
+<h1>Patient Answers</h1>
+<table id="viewanswers" class="table table-striped table-bordered" style="width:100%" style="width:100%">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div>
 
 </div>
 
@@ -110,7 +119,7 @@ $( document ).ready(function() {
 
 function view_profile(){
 
-    var userData = JSON.parse(localStorage.getItem('testObject'));
+    var userData = JSON.parse(localStorage.getItem('counselorObject'));
 	counsellorId = userData['counsellorId']
 
             $.ajax({
@@ -130,7 +139,7 @@ function view_profile(){
 
 
 function view_selected_patients(){
-    var userData = JSON.parse(localStorage.getItem('testObject'));
+    var userData = JSON.parse(localStorage.getItem('counselorObject'));
 	counsellorId = userData['counsellorId']
             $.ajax({
                     type: "POST",
@@ -140,28 +149,35 @@ function view_selected_patients(){
                         "counselorId" : counsellorId
                     },
                     success: function(res){
-                        console.log(res)
+                        patient_data(res)
                         
                     }
                 });
 
 }
 
-// function get_not_approved_data(){
-    
-//             $.ajax({
-//                     type: "POST",
-//                     url: 'utils/admin_api.php',
-//                     data: {
-//                         "not_approved" : "1",
-//                     },
-//                     success: function(res){
-//                         not_approved_table(res)
-    
-//                     }
-//                 });
+function patient_data(data){
+    $('#approved').DataTable( {
+        "processing": true,
+        "data": data,
+        "columns": [
+            { "data": "patientId" },
+            { "data": "name" },
+            { "data": "email" },
+            { "data": "dob" },
+            { "data": "gender" },
+            { "data": "date_time" },
+            { data: "patientId", 
+            render: function (data, type, row) {
+          return `<input type="button" onclick="viewPastScores(${row.patientId})" value="past Scores" />`
+        }}
+        ]
+    } );
 
-// }
+
+}
+
+
 
 
 // function not_approved_table(data){
@@ -184,58 +200,81 @@ function view_selected_patients(){
 
 // }
 
-// function approved_table(data){
-//     $('#approved').DataTable( {
-//         "processing": true,
-//         "data": data,
-//         "columns": [
-//             { "data": "counselorId" },
-//             { "data": "name" },
-//             { "data": "category" },
-//             { "data": "email" },
-//             { "data": "dob" },
-//             { "data": "gender" },
-//             { data: "counselorId", 
-//             render: function (data, type, row) {
-//           return `<input type="button" onclick="unapprove(${row.counselorId})" value="Un_Approve" />`
-//         }}
-//         ]
-//     } );
-
-
-// }
-
-
-// function approve(Id){
-//          $.ajax({
-//                     type: "POST",
-//                     url: 'utils/admin_api.php',
-//                     data: {
-//                         "approve_counselor" : "1",
-//                         "counselorId" : Id
-//                     },
-//                     success: function(res){
-//                         window.location.reload();
+function viewPastScores(Id){
+    console.log(Id)
+         $.ajax({
+                    type: "POST",
+                    url: 'utils/questions_api.php',
+                    data: {
+                        "view_distinct" : "1",
+                        "patientId" : Id
+                    },
+                    success: function(res){
+                        console.log(res)
+                        pastScores(res, Id)
     
-//                     }
-//                 });
+                    }
+                });
 
-// }
+}
 
-// function unapprove(Id){
-//             $.ajax({
-//                     type: "POST",
-//                     url: 'utils/admin_api.php',
-//                     data: {
-//                         "un_approve_counselor" : "1",
-//                         "counselorId" : Id
-//                     },
-//                     success: function(res){
-//                         window.location.reload();
+function pastScores(data,Id){
+    $('#PastScores').DataTable( {
+        "processing": true,
+        "data": data,
+        "columns": [
+            { "data": "date_time" },
+            { "data": "marks" },
+            { data: "date_time", 
+            render: function (data, type, row) {
+                dateArray = []
+                dateArray[0] = row
+          return `<input type="button" onclick="viewQuestionaire(this,${Id})" custom = "${row.date_time}" value="Questionaire" />`
+        }}
+        ]
+    } );
+
+
+}
+
+function viewQuestionaire(e,pId){
+    var date_time = e.getAttribute('custom');
+    console.log(date_time,pId)
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/questions_api.php',
+                    data: {
+                        "view_answers" : "1",
+                        "date_time" : date_time,
+                        "patientId" : pId
+                    },
+                    success: function(res){
+                        console.log(res)
+                        viewAnswers(res)
     
-//                     }
-//                 });
-// }
+                    }
+                });
+
+}
+
+function viewAnswers(data){
+    $('#viewanswers').DataTable( {
+        "processing": true,
+        "data": data,
+        "columns": [
+            { "data": "question" },
+            { "data": "answer" },
+        
+        ]
+    } );
+
+
+
+}
+
+
+
+
 
 
 </script>

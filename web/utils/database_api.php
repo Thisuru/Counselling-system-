@@ -49,7 +49,6 @@ function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $pas
     $result = mysqli_query($link, $query);
     if (mysqli_num_rows($result) == 0) {
         $query = "INSERT INTO counselor VALUES('".$key."','".$name."', '".$dob."', '".$gender."','".$category."', '".$email."', '".md5($password)."','".$state."','".$treatmentScore."')";
-        echo $query;
         if (mysqli_query($link, $query)) {
             return true;
         }
@@ -404,7 +403,7 @@ function getquestions($link){
 
 
 function getSelectedCounsellors($link,$counsellor_type){
-    $query = "SELECT * FROM counselor WHERE state = '0' AND category = '".$counsellor_type."' ";
+    $query = "SELECT * FROM counselor WHERE state = '1' AND category = '".$counsellor_type."' ";
     $result = mysqli_query($link, $query)or die("Error");
     $counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -485,7 +484,7 @@ function viewCounsellorProfile($link,$counselorId){
 
 function viewPatients($link,$counselorId){
 
-    $query = "SELECT * FROM patient INNER JOIN patient_select_counselor ON patient.patientId=patient_select_counselor.patientId and patient_select_counselor.counselorId = 2";
+    $query = "SELECT * FROM patient INNER JOIN patient_select_counselor ON patient.patientId=patient_select_counselor.patientId and patient_select_counselor.counselorId = $counselorId";
     $result = mysqli_query($link, $query)or die("Error");
 
     $patient_list = array();
@@ -517,6 +516,82 @@ function viewPatients($link,$counselorId){
   
 
 }
+
+function getDistinctAnswerTimes($link,$patientId){
+ $query = "SELECT * FROM patient_marks WHERE patientId = $patientId";
+ $result = mysqli_query($link, $query)or die("Error");
+ $data_list = array();
+ if (mysqli_num_rows($result) > 0) {
+
+     while($row = mysqli_fetch_assoc($result)) {
+
+         $data = new stdClass;
+         $data->questionId = $row["markId"];
+         $data->date_time = $row["date_time"];
+         $data->marks = $row["marks"];
+
+
+         
+         //  $_SESSION['user'] = $user;
+
+         // echo json_encode($row);
+
+         array_push($data_list, $data);
+
+     }
+
+    
+     return  $data_list;
+ } else {
+     return null;
+ }
+
+}
+
+function getAllAnsewers($link,$patientId, $date_time){
+    $query = "SELECT * FROM answers WHERE patientId = $patientId AND date_time = '".$date_time."'";
+    $result = mysqli_query($link, $query)or die("Error");
+    $data_list = array();
+    if (mysqli_num_rows($result) > 0) {
+   
+        while($row = mysqli_fetch_assoc($result)) {
+   
+            $data = new stdClass;
+            $questionId = $row["questionId"];
+            $answer = $row["answer"];
+
+            $query1 = "SELECT $answer,question FROM questionnaire WHERE questionId = $questionId";
+            $result2 = mysqli_query($link, $query1)or die("Error");
+            if (mysqli_num_rows($result) > 0) {
+   
+                while($row = mysqli_fetch_assoc($result2)) {
+                    $data = new stdClass;
+
+                    $data->question =  $row['question'];
+                    $data->answer = $row[$answer];
+                    
+
+                }
+            
+            
+            }
+
+            
+            //  $_SESSION['user'] = $user;
+   
+            // echo json_encode($row);
+   
+            array_push($data_list, $data);
+   
+        }
+   
+       
+        return  $data_list;
+    } else {
+        return null;
+    }
+   
+   }
 
 
 
