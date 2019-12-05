@@ -506,7 +506,7 @@ function getquestions($link){
 
 
 function getSelectedCounsellors($link,$counsellor_type){
-    $query = "SELECT * FROM counselor WHERE state = '0' AND category = '".$counsellor_type."' ";
+    $query = "SELECT * FROM counselor WHERE state = '1' AND category = '".$counsellor_type."' ";
     $result = mysqli_query($link, $query)or die("Error");
     $counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
