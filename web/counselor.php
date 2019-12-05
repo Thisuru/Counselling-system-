@@ -34,12 +34,14 @@ if ($user == null) {
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <!-- 
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all"> -->
     <link href=https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css>
 
-    <link href="css/main.css" rel="stylesheet" media="all">
+    <!-- <link href="css/main.css" rel="stylesheet" media="all"> -->
 </head>
 
 <body>
@@ -82,6 +84,8 @@ if ($user == null) {
             </tr>
         </thead>
     </table>
+    <input type="button" class="Button" onclick="updateIsAnsweredState()"  value="enable Questionaire" />
+    <input type="button" class="Button" onclick="to_chat()"  value="Chat" />
 </div>
 
 <div>
@@ -107,6 +111,9 @@ if ($user == null) {
 
 <script>
 
+var patientId = '';
+var counsellorId = '';
+
 $( document ).ready(function() {
 
     view_profile()
@@ -121,6 +128,7 @@ function view_profile(){
 
     var userData = JSON.parse(localStorage.getItem('counselorObject'));
 	counsellorId = userData['counsellorId']
+    consellorId = counsellorId;
 
             $.ajax({
                     type: "POST",
@@ -202,6 +210,7 @@ function patient_data(data){
 
 function viewPastScores(Id){
     console.log(Id)
+    patientId = Id;
          $.ajax({
                     type: "POST",
                     url: 'utils/questions_api.php',
@@ -270,6 +279,23 @@ function viewAnswers(data){
 
 
 
+}
+
+function updateIsAnsweredState(){
+    $.ajax({
+                    type: "POST",
+                    url: 'utils/questions_api.php',
+                    data: {
+                        "view_answers" : "1",
+                        "date_time" : date_time,
+                        "patientId" : pId
+                    },
+                    success: function(res){
+                        console.log(res)
+                        viewAnswers(res)
+    
+                    }
+                });
 }
 
 
