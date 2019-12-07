@@ -4,7 +4,7 @@ require ('utils/database_api.php');
 $user = unserialize($_SESSION['counsellor']);
 
 if ($user == null) {
-    $user = unserialize($_SESSION['patient']);
+    $user = unserialize($_SESSION['counsellor']);
     
 }
 

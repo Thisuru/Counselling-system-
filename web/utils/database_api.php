@@ -223,7 +223,7 @@ function authenticateCounsellor($link, $email, $password) {
 
         }
         if($approoved==true){
-            $user = User::withData($row['name'], $row['dob'],$row['gender'], 'Counsellor', $row['email']);
+            $user = User::withData($name, $dob,$gender, 'counsellor', $email);
             $_SESSION['counsellor'] = '1';
             $_SESSION['counsellor'] = serialize($user);
             header('Content-Type: application/json');      

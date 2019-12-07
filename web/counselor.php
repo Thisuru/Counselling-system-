@@ -91,7 +91,7 @@ li a:hover {
             <nav>
                 <ul class = "nav">
                     <li><a href="newsfeed.php">News Feed</a></li>
-                    <li><a href="generatenews.php">Generate News</a></li>
+                    <li><a href="addmusic.php">Add Music</a></li>
                     <li><a href="music.php">Music</a></li>
                     <li><a href="livechat.php">Live Chat</a></li>
                     
