@@ -1,12 +1,18 @@
 <?php
 session_start();
 require ('utils/database_api.php');
-// $user = unserialize($_SESSION['user']);
+$user = unserialize($_SESSION['counsellor']);
 
-// if ($user == null) {
-//     header("location: 404.php");
-//     exit();
-// }
+if ($user == null) {
+    $user = unserialize($_SESSION['patient']);
+    
+}
+
+if ($user == null) {
+    header("location: 404.php");
+    exit();
+}
+
 ?>
 
 <html lang="en">

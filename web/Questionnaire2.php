@@ -447,9 +447,9 @@ function showTheResults() {
 			total = NUMQUESTIONS;
 	
 	// Print the results.
-	numCorrect.textContent = correct;
-	numWrong.textContent = wrong;
-	numTotal.textContent = total;
+	// numCorrect.textContent = correct;
+	// numWrong.textContent = wrong;
+	// numTotal.textContent = total;
 	var userData = JSON.parse(localStorage.getItem('testObject'));
 	localStorage.setItem('totalMarks',totalScore)
 	patientId = userData['patientId']
