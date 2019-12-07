@@ -138,13 +138,13 @@ if ($user == null) {
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Admin email</label>
+                                                <label>Email</label>
                                                 <input type="text" class="form-control" disabled placeholder="Email" value="<?php echo $user->getEmail()?>">
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Admin Name</label>
+                                                <label for="exampleInputEmail1">Name</label>
                                                 <input type="text" class="form-control" disabled placeholder="Name" value="<?php echo $user->getName()?>">
                                             </div>
                                         </div>
