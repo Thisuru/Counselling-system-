@@ -1,3 +1,43 @@
+<style>
+
+body {
+  font-size: 28px;
+}
+
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +56,20 @@
 </head>
 
 <body>
+
+    <header>
+            <nav>
+                <ul class = "nav">
+                    <li><a href="newsfeed.php">News Feed</a></li>
+                    <li><a href="generatenews.php">Generate News</a></li>
+                    <li><a href="music.php">Music</a></li>
+                    <li><a href="livechat.php">Live Chat</a></li>
+                    
+                </ul>
+            </nav>
+        </header>
+
+
 <input id="updateState" type="button" class="Button" onclick="logout()"  value="Logout" />
 
 
