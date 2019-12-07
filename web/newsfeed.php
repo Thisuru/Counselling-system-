@@ -1,7 +1,7 @@
 d<?php
 /**
  * Created by PhpStorm.
- * User: tharinduranaweera
+ * User: aparna_ravihari
  * Date: 5/18/19
  * Time: 6:12 PM
  */
@@ -120,9 +120,7 @@ $newslist = getAllNews($link);
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
+                            <input id="log_out" type="button" class="Button" onclick="logout()"  value="Logout" />
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
@@ -200,3 +198,25 @@ $newslist = getAllNews($link);
 <script src="assets/js/demo.js"></script>
 
 </html>
+
+
+<script>
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
+}
+
+</script>

@@ -2,16 +2,16 @@
 session_start();
 require ('utils/database_api.php');
 
-if($_SESSION['patient'] == null && $_SESSION['counselor'] == null){
-    header("location: 404.php");
-    exit();
-}
-if($_SESSION['patient'] == null){
-    $user = $_SESSION['counselor'];
-}
-if($_SESSION['counsellor'] == null){
-    $user = $_SESSION['patient'];
-}
+// if($_SESSION['patient'] == null && $_SESSION['counselor'] == null){
+//     header("location: 404.php");
+//     exit();
+// }
+// if($_SESSION['patient'] == null){
+//     $user = $_SESSION['counselor'];
+// }
+// if($_SESSION['counsellor'] == null){
+//     $user = $_SESSION['patient'];
+// }
 
 
 
@@ -56,29 +56,31 @@ if($_SESSION['counsellor'] == null){
 
             function sendMessage(){
                 var message = document.getElementById("message").value;
-                var sender = "<?php 
-                if($_SESSION['patient'] == null){
-                    echo "Counsellor  ";
-                } else{
+                // var sender = "<?php 
+                // if($_SESSION['patient'] == null){
+                //     echo "Counsellor  ";
+                // } else{
 
-                    echo "Patient ";
+                //     echo "Patient ";
 
-                }?>";
+                // }?>";
 
-                message = "<b>"+sender+": </b>" + " " + message;
+               
                 console.log(sender)
                     var patientData = JSON.parse(localStorage.getItem('testObject'));
                     var counselorData = JSON.parse(localStorage.getItem('counselorObject'));
+                    var sender = ""
                     if(patientData === null){
-                        window.alert("Patient is offline...")
+                        sender = counselorData['name']
+                       
                     }
 
                     if(counselorData === null){
-                        window.alert("counselor is offline...")
+                        sender = patientData['name']
                     }
 
-	                var patient = patientData['name']
-                    var counselor = counselorData['name']
+	                message = "<b>"+sender+": </b>" + " " + message;
+                   
 
 
 
@@ -86,7 +88,7 @@ if($_SESSION['counsellor'] == null){
                 $.ajax({
                     type: "POST",
                     url: 'utils/chat_api.php',
-                    data: {counsellor: counselor, patient: patient, message: message},
+                    data: {counsellor: sender, patient: sender, message: message},
                     success: function(data){
                         console.log('SUCCESS' + data);
                         readMessages();
@@ -112,21 +114,22 @@ if($_SESSION['counsellor'] == null){
             function readMessages(){
                     var patientData = JSON.parse(localStorage.getItem('testObject'));
                     var counselorData = JSON.parse(localStorage.getItem('counselorObject'));
+                    var sender = ""
                     if(patientData === null){
-                        window.alert("Patient is offline...")
+                        sender = counselorData['name']
                     }
 
                     if(counselorData === null){
-                        window.alert("counselor is offline...")
+                        sender = patientData['name']
                     }
 
-	                var patient = patientData['name']
-                    var counselor = counselorData['name']
+	                
+                   
         
                 $.ajax({
                     type: "POST",
                     url: 'utils/chat_api.php',
-                    data: {counsellor: counselor, patient: patient, get: 'get'},
+                    data: {counsellor: sender, patient: sender, get: 'get'},
                     success: function(data){
                         console.log(data)
                         if (messagecount < data.length) {
@@ -218,9 +221,9 @@ if($_SESSION['counsellor'] == null){
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#">
-                                    <p>Log out</p>
-                                </a>
+
+                            <input id="log_out" type="button" class="Button" onclick="logout()"  value="Logout" />
+                            
                             </li>
                             <li class="separator hidden-lg hidden-md"></li>
                         </ul>
@@ -300,9 +303,30 @@ if($_SESSION['counsellor'] == null){
 <?php
 /**
  * Created by PhpStorm.
- * User: tharinduranaweera
+ * User: aparna_ravihari
  * Date: 5/19/19
  * Time: 11:52 AM
  */
 
 ?>
+
+<script>
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
+}
+
+</script>

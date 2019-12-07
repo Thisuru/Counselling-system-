@@ -4,12 +4,12 @@ require ('utils/database_api.php');
 
 /**
  * Created by PhpStorm.
- * User: tharinduranaweera
+ * User: aparna_ravihari
  * Date: 5/13/19
  * Time: 11:13 PM
  */
 
-$user = unserialize($_SESSION['user']);
+$user = unserialize($_SESSION['patient']);
 
 if ($user == null) {
     header("location: 404.php");
@@ -117,9 +117,7 @@ if ($user == null) {
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
+                            <input id="log_out" type="button" class="Button" onclick="logout()"  value="Logout" />
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
@@ -141,13 +139,13 @@ if ($user == null) {
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Admin email</label>
+                                                <label>Email</label>
                                                 <input type="text" class="form-control" disabled placeholder="Email" value="<?php echo $user->getEmail() ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Admin Name</label>
+                                                <label for="exampleInputEmail1">Name</label>
                                                 <input type="text" class="form-control" disabled placeholder="Name" value="<?php echo $user->getName() ?>">
                                             </div>
                                         </div>
@@ -329,3 +327,25 @@ function createNews($link, $email, $name, $description, $photo_path, $date_time)
     return $isSuccessful;
 }
 ?>
+
+
+<script>
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
+}
+
+</script>

@@ -1,14 +1,14 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: tharinduranaweera
+ * User: aparna_ravihari
  * Date: 5/19/19
  * Time: 9:57 AM
  */
 session_start();
 
 require ('utils/database_api.php');
-$user = $_SESSION['Admin'];
+$user = $_SESSION['admin'];
 
 if ($user == null) {
     header("location: 404.php");
@@ -16,6 +16,46 @@ if ($user == null) {
 }
 
 ?>
+
+<style>
+
+body {
+  font-size: 28px;
+}
+
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+
+</style>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +68,21 @@ if ($user == null) {
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
 
+
+    <header>
+            <nav>
+                <ul class = "nav">
+                    <li><a href="newsfeed.php">News Feed</a></li>
+               
+                    <li><a href="music.php">Music</a></li>
+                    
+                    
+                </ul>
+            </nav>
+        </header>
+
+
+
     <title>User Registration</title>
     <!-- <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -39,11 +94,10 @@ if ($user == null) {
     <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all"> -->
     <link href=https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css>
 
-    <link href="css/main.css" rel="stylesheet" media="all">
 </head>
 
 <body>
-
+<input id="updateState" type="button" class="Button" onclick="logout()"  value="Logout" />
 <div>
 <h1>Not Approved Counselors</h1>
 <table id="not_approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
@@ -212,6 +266,24 @@ function unapprove(Id){
     
                     }
                 });
+}
+
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
 }
 
 

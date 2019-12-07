@@ -119,6 +119,10 @@ function authenticatePatient($link, $email, $password) {
 
     $result = mysqli_query($link, $query);
     $patient = new stdClass;
+    $name='';
+    $dob= '';
+    $gender='';
+    $email='';
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
 
@@ -131,12 +135,18 @@ function authenticatePatient($link, $email, $password) {
             $patient->gender = $row['gender'];
             $patient->email = $row['email'];
             $patient->isAnswered = $row['IsAnswered'];
+
+            $name= $row['name'];
+            $dob= $row['dob'];
+            $gender=$row['gender'];
+            $email= $row['email'];
                                              
 
 
         }
+        $user = User::withData($name, $dob,$gender, 'patient', $email);
         $_SESSION['patient'] = '1';
-        $_SESSION['patient'] = serialize($patient);
+        $_SESSION['patient'] = serialize($user);
         header('Content-Type: application/json');      
         echo json_encode($patient, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
         exit;   
@@ -183,6 +193,10 @@ function authenticateCounsellor($link, $email, $password) {
     $result = mysqli_query($link, $query);
     $counsellor = new stdClass;
     $approoved = True;
+    $name='';
+    $dob= '';
+    $gender='';
+    $email='';
     if (mysqli_num_rows($result) > 0) {
 
         while($row = mysqli_fetch_assoc($result)) {
@@ -198,14 +212,20 @@ function authenticateCounsellor($link, $email, $password) {
             if($row['state'] == "0"){
                 $approoved = false;
             }
+            $name= $row['name'];
+            $dob= $row['dob'];
+            $gender=$row['gender'];
+            $email= $row['email'];
+
             // $user = User::withData($name, $dob, $gender, $email);
             //  $_SESSION['user'] = $user;
              
 
         }
         if($approoved==true){
+            $user = User::withData($name, $dob,$gender, 'counsellor', $email);
             $_SESSION['counsellor'] = '1';
-            $_SESSION['counsellor'] = serialize($counsellor);
+            $_SESSION['counsellor'] = serialize($user);
             header('Content-Type: application/json');      
             echo json_encode($counsellor, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
             exit;
@@ -220,6 +240,8 @@ function authenticateCounsellor($link, $email, $password) {
         return null;
     }
 }
+
+
 
 
 
@@ -506,7 +528,7 @@ function getquestions($link){
 
 
 function getSelectedCounsellors($link,$counsellor_type){
-    $query = "SELECT * FROM counselor WHERE state = '0' AND category = '".$counsellor_type."' ";
+    $query = "SELECT * FROM counselor WHERE state = '1' AND category = '".$counsellor_type."' ";
     $result = mysqli_query($link, $query)or die("Error");
     $counsellors_list = array();
     if (mysqli_num_rows($result) > 0) {
@@ -696,6 +718,15 @@ function getAllAnsewers($link,$patientId, $date_time){
    
    }
 
+   function updateIsAnsweredState($link,$patientId){
+
+    $query = "UPDATE patient SET IsAnswered = false WHERE patientId = $patientId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    return $result;
+
+    
+}
 
 
 
