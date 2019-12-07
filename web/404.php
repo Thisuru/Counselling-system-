@@ -14,6 +14,7 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <script src="vendor/jquery/jquery.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,9 +32,9 @@
         <div class="notfound-404">
             <h1>Oops!</h1>
         </div>
-        <h2>404 - Page not found</h2>
-        <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
-        <a href="login.php">Go To Login</a>
+        <h2>404 - Page not found  OR</h2>
+        <p>You Dont Have Permission to View This Page</p>
+        <a id="log_out" type="button" class="Button" onclick="logout()"  value="Logout" > Logout </a>
     </div>
 </div>
 
@@ -50,3 +51,24 @@
  * Time: 9:23 AM
  */
 ?>
+
+<script>
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+
+}
+
+</script>
