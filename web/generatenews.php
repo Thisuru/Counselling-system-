@@ -4,17 +4,17 @@ require ('utils/database_api.php');
 
 /**
  * Created by PhpStorm.
- * User: tharinduranaweera
+ * User: aparna_ravihari
  * Date: 5/13/19
  * Time: 11:13 PM
  */
 
-// $user = unserialize($_SESSION['user']);
+$user = unserialize($_SESSION['patient']);
 
-// if ($user == null) {
-//     header("location: 404.php");
-//     exit();
-// }
+if ($user == null) {
+    header("location: 404.php");
+    exit();
+}
 
 ?>
 
@@ -141,13 +141,13 @@ require ('utils/database_api.php');
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Admin email</label>
+                                                <label>Email</label>
                                                 <input type="text" class="form-control" disabled placeholder="Email" value="<?php echo $user->getEmail() ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Admin Name</label>
+                                                <label for="exampleInputEmail1">Name</label>
                                                 <input type="text" class="form-control" disabled placeholder="Name" value="<?php echo $user->getName() ?>">
                                             </div>
                                         </div>
