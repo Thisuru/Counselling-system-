@@ -2,15 +2,15 @@
 
 require ('utils/database_api.php');
 
-if(isset($_SESSION['Patient'])){
+if(isset($_SESSION['patient'])){
     header('Location: Questionnaire2.php');
     exit();
 }
-if(isset($_SESSION['Admin'])){
+if(isset($_SESSION['admin'])){
     header('Location: Admin.php');
     exit();
 }
-if(isset($_SESSION['Counsellor'])){
+if(isset($_SESSION['counsellor'])){
     header('Location: newsfeed.php');
     exit();
 }
