@@ -9,7 +9,7 @@ session_start();
 
 require ('utils/database_api.php');
 
-$user = unserialize($_SESSION['user']);
+// $user = unserialize($_SESSION['user']);
 
 // if ($user == null) {
 //     header("location: 404.php");
