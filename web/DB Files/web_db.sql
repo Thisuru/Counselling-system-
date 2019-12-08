@@ -71,12 +71,8 @@ CREATE TABLE if not exists `music` (
 --
 
 INSERT INTO `music` (`music_path`, `admin_email`, `admin_name`, `title`, `description`, `date_time`, `category`) VALUES
-('16209938502643_4cd4.mp3', 'tharindu@gmail.com', 'Tharindu', 'Music Title', 'desc', '2019-May-19_12:23', NULL),
-('43358393Alan Walker - Faded [128].mp3', 'tharindu@gmail.com', 'Tharindu', 'second', 'test', '2019-May-19_12:24', 'study_mode_music'),
-('1633405548Daddy_Ai_Kale.mp3', 'tharindu@gmail.com', 'Tharindu', 'title 3', 'hey', '2019-May-19_12:30', NULL),
-('1470197519bb3.mp3', 'aaa@aaa.com', 'Tharindu', 'new', 'new', '2019-Jun-22_01:12', 'encourage_music'),
-('168699000704 Sorry.mp3', 'tharindu@gmail.com', 'Tharindu', 'hey', 'Crocodile buns', '2019-Jul-03_12:49', 'encourage_music'),
-('1909204890Daddy_Ai_Kale.mp3', 'tharindu@gmail.com', 'Tharindu', 'Test Music', 'Music desc', '2019-Jul-03_03:31', 'meditation_music');
+('16209938502643_4cd4.mp3', 'aparana@gmail.com', 'Aparna', 'Music Title', 'desc', '2019-May-19_12:23', NULL);
+
 
 -- --------------------------------------------------------
 
@@ -98,11 +94,8 @@ CREATE TABLE if not exists `news_feed` (
 -- Dumping data for table `news_feed`
 --
 
-INSERT INTO `news_feed` (`admin_email`, `admin_name`, `description`, `photo_path`, `date_time`) VALUES
-('tharindu@gmail.com', 'Tharindu', 'hey there', '125791644back.png', '2019-May-18_08:11'),
-('tharindu@gmail.com', 'Tharindu', 'Description goes here', 'male-reporter.png', '2019-May-18_08:21'),
-('tharindu@gmail.com', 'Tharindu', 'Description goes hereDescription goes hereDescription goes hereDescription goes hereDescription goes hereDescription goes hereDescription goes hereDescription goes here', '2053559457wall2.png', '2019-May-18_08:38'),
-('aaa@aaa.com', 'Tharindu', 'new', '537609415back.png', '2019-Jun-22_01:10');
+INSERT INTO `news_feed` (`patient_email`, `patient_name`, `description`, `photo_path`, `date_time`) VALUES
+('aparna@gmail.com', 'aparna', 'hey there', '125791644back.png', '2019-May-18_08:11');
 
 -- --------------------------------------------------------
 
