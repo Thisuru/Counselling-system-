@@ -86,8 +86,8 @@ INSERT INTO `music` (`music_path`, `admin_email`, `admin_name`, `title`, `descri
 
 CREATE TABLE if not exists `news_feed` (
   `article_no` int(11) NOT NULL auto_increment,
-  `admin_email` varchar(50) NOT NULL,
-  `admin_name` varchar(50) NOT NULL,
+  `patient_email` varchar(50) NOT NULL,
+  `patient_name` varchar(50) NOT NULL,
   `description` varchar(500) NOT NULL,
   `photo_path` varchar(500) NOT NULL,
   `date_time` varchar(50) NOT NULL,

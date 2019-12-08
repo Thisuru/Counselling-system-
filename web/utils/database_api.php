@@ -82,7 +82,7 @@ function createCounselor($link,$key,$name, $dob, $gender,$category, $email, $pas
 
 
 function insertNewsRecord($link, $record) {
-    $query = "INSERT INTO news_feed(admin_email, admin_name, description, photo_path, date_time) VALUES('".$record->getAdminEmail()."', '".$record->getAdminName()."', '".$record->getDescription()."', '".$record->getPhotoPath()."', '".$record->getDateTime()."')";
+    $query = "INSERT INTO news_feed(patient_email, patient_name, description, photo_path, date_time) VALUES('".$record->getAdminEmail()."', '".$record->getAdminName()."', '".$record->getDescription()."', '".$record->getPhotoPath()."', '".$record->getDateTime()."')";
 
     if (mysqli_query($link, $query)) {
         return true;
