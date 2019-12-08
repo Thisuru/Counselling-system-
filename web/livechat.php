@@ -1,21 +1,16 @@
 <?php
 session_start();
 require ('utils/database_api.php');
-
-// if($_SESSION['patient'] == null && $_SESSION['counselor'] == null){
-//     header("location: 404.php");
-//     exit();
-// }
-// if($_SESSION['patient'] == null){
-//     $user = $_SESSION['counselor'];
-// }
-// if($_SESSION['counsellor'] == null){
-//     $user = $_SESSION['patient'];
-// }
-
-
-
-
+if($_SESSION['patient'] == null && $_SESSION['counselor'] == null){
+    header("location: 404.php");
+    exit();
+}
+if($_SESSION['patient'] == null){
+    $user = $_SESSION['counselor'];
+}
+if($_SESSION['counsellor'] == null){
+    $user = $_SESSION['patient'];
+}
 ?>
 
     <html lang="en">
@@ -50,45 +45,32 @@ require ('utils/database_api.php');
         <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
         <script>
-
             var messages;
             var messagecount = 0;
-
             function sendMessage(){
                 var message = document.getElementById("message").value;
-                // var sender = "<?php 
-                // if($_SESSION['patient'] == null){
-                //     echo "Counsellor  ";
-                // } else{
-
-                //     echo "Patient ";
-
-                // }?>";
-
-               
+                var sender = "<?php 
+                if($_SESSION['patient'] == null){
+                    echo "Counsellor  ";
+                } else{
+                    echo "Patient ";
+                }?>";
+                message = "<b>"+sender+": </b>" + " " + message;
                 console.log(sender)
                     var patientData = JSON.parse(localStorage.getItem('testObject'));
                     var counselorData = JSON.parse(localStorage.getItem('counselorObject'));
-                    var sender = ""
                     if(patientData === null){
-                        sender = counselorData['name']
-                       
+                        window.alert("Patient is offline...")
                     }
-
                     if(counselorData === null){
-                        sender = patientData['name']
+                        window.alert("counselor is offline...")
                     }
-
-	                message = "<b>"+sender+": </b>" + " " + message;
-                   
-
-
-
-
+	                var patient = patientData['name']
+                    var counselor = counselorData['name']
                 $.ajax({
                     type: "POST",
                     url: 'utils/chat_api.php',
-                    data: {counsellor: sender, patient: sender, message: message},
+                    data: {counsellor: counselor, patient: patient, message: message},
                     success: function(data){
                         console.log('SUCCESS' + data);
                         readMessages();
@@ -98,44 +80,35 @@ require ('utils/database_api.php');
                     }
                 });
             }
-
             function checkMessageHistory() {
-
                 var userData = JSON.parse(localStorage.getItem('testObject'));
 	                var patient = userData['name']
                     var sender = '' 
-
                 window.setInterval(function(){
                     readMessages();
                 }, 5000);
-
             }
-
             function readMessages(){
                     var patientData = JSON.parse(localStorage.getItem('testObject'));
                     var counselorData = JSON.parse(localStorage.getItem('counselorObject'));
-                    var sender = ""
                     if(patientData === null){
-                        sender = counselorData['name']
+                        window.alert("Patient is offline...")
                     }
-
                     if(counselorData === null){
-                        sender = patientData['name']
+                        window.alert("counselor is offline...")
                     }
-
-	                
-                   
+	                var patient = patientData['name']
+                    var counselor = counselorData['name']
         
                 $.ajax({
                     type: "POST",
                     url: 'utils/chat_api.php',
-                    data: {counsellor: sender, patient: sender, get: 'get'},
+                    data: {counsellor: counselor, patient: patient, get: 'get'},
                     success: function(data){
                         console.log(data)
                         if (messagecount < data.length) {
                             messages = data;
                             console.log(data);
-
                             for (var i = messagecount; i < data.length; i++) {
                                 var node = document.createElement("p");
                                 var message = data[i].message;
@@ -147,9 +120,7 @@ require ('utils/database_api.php');
                     }
                 });
             }
-
             checkMessageHistory();
-
         </script>
 
     </head>
@@ -221,9 +192,9 @@ require ('utils/database_api.php');
 
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-
-                            <input id="log_out" type="button" class="Button" onclick="logout()"  value="Logout" />
-                            
+                                <a href="#">
+                                    <p>Log out</p>
+                                </a>
                             </li>
                             <li class="separator hidden-lg hidden-md"></li>
                         </ul>
@@ -303,30 +274,8 @@ require ('utils/database_api.php');
 <?php
 /**
  * Created by PhpStorm.
- * User: aparna_ravihari
+ * User: tharinduranaweera
  * Date: 5/19/19
  * Time: 11:52 AM
  */
-
 ?>
-
-<script>
-function logout(){
-    localStorage.clear();
-            $.ajax({
-                    type: "POST",
-                    url: 'utils/log_out.php',
-                    data: {
-                        "logout" : "1",
-                    },
-                    success: function(res){
-                      
-							location.href = "login.php";
-						
-    
-                    }
-                });
-
-}
-
-</script>
