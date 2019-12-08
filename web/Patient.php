@@ -140,7 +140,7 @@ function get_counsellors(){
     var totalScore = JSON.parse(localStorage.getItem('totalMarks'));
     console.log(totalScore)
     if(totalScore<=10){
-        counsellor_type = "Normal Depression"
+        counsellor_type = "Normal"
     }
     if(totalScore > 10 && totalScore <= 16){
         counsellor_type = "Mild mode Depression";

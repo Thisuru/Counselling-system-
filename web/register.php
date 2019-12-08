@@ -70,7 +70,7 @@
                         <div class="rs-select2 js-select-simple select--no-search">
                             <select id="counsellorBox" name="counselor_category" required>
                                 <option disabled="disabled" selected="selected">Account Type</option>
-                                <option value = 10>Normal Depression</option>
+                                <option value = 10>Normal</option>
                                 <option value = 16>Mild mode Depression</option>
                                 <option value = 20>Borderline Clinical</option>
                                 <option value = 30>Moderate Depression</option>
