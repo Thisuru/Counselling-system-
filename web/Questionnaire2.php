@@ -459,6 +459,7 @@ function showTheResults() {
 	 data_to_db["answers"] = answer_to_db
 	 data_to_db["date"] = date
 	 data_to_db["patient"] = patientId
+	 console.log(answer_to_db)
 	 
 	
 			$.ajax({

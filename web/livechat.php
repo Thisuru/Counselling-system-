@@ -1,12 +1,12 @@
 <?php
 session_start();
 require ('utils/database_api.php');
-if($_SESSION['patient'] == null && $_SESSION['counselor'] == null){
+if($_SESSION['patient'] == null && $_SESSION['counsellor'] == null){
     header("location: 404.php");
     exit();
 }
 if($_SESSION['patient'] == null){
-    $user = $_SESSION['counselor'];
+    $user = $_SESSION['counsellor'];
 }
 if($_SESSION['counsellor'] == null){
     $user = $_SESSION['patient'];
