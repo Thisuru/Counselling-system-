@@ -55,7 +55,7 @@ if($_SESSION['counsellor'] == null){
                 } else{
                     echo "Patient ";
                 }?>";
-                message = "<b>"+sender+": </b>" + " " + message;
+                message = "<b>"+"User"+": </b>" + " " + message;
                 console.log(sender)
                     var patientData = JSON.parse(localStorage.getItem('testObject'));
                     var counselorData = JSON.parse(localStorage.getItem('counselorObject'));

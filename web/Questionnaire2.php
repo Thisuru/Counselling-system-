@@ -249,7 +249,7 @@ ul {
 <script>
 
 // Number of questions. Max=52.
-const NUMQUESTIONS = 21;
+const NUMQUESTIONS = 4;
 
 // List of questions.
 let questionsMap = new Map();
@@ -395,7 +395,7 @@ function checkTheAnswer() {
         this.classList.add("correct");
 
 		answer_to_db[questionId] = {"answer":givenAnswer}
-
+		console.log(answer_to_db)
 
     //     setTimeout(clearClasses, 1000);
 	// 	setTimeout(getNextQuestion, 1000);

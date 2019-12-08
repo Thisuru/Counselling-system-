@@ -451,16 +451,16 @@ function addMarks($link, $patientId, $marks, $date_time, $to_answer_table){
             $score = 0;
          if($answer == 'a'){
              $answer = 'answer1';
-             $score = 1;
+             $score = 0;
          }elseif($answer == 'b'){
              $answer = 'answer2';
-             $score = 2;
+             $score = 1;
          }elseif($answer == 'c'){
             $answer = 'answer3';
-            $score = 3;
+            $score = 2;
          }elseif($answer == 'd'){
             $answer = 'answer4';
-            $score = 4;
+            $score = 3;
          }
 
          $query = "INSERT INTO answers(patientId,questionId,date_time,answer,score)VALUES('".$patientId."','".$questionId."','".$date_time."','".$answer."','".$score."')";
