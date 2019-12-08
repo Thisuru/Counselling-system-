@@ -127,7 +127,8 @@ li a:hover {
 $( document ).ready(function() {
 
 
-get_counsellors()
+get_counsellors();
+check_is_counselor_selected();
 
 
 
@@ -240,6 +241,30 @@ function logout(){
                       
 							location.href = "login.php";
 						
+    
+                    }
+                });
+
+}
+
+
+function check_is_counselor_selected(){
+
+    var userData = JSON.parse(localStorage.getItem('testObject'));
+	patientId = userData['patientId']
+         $.ajax({
+                    type: "POST",
+                    url: 'utils/patient_api.php',
+                    data: {
+                        "check_is_counselor_selected" : "1",
+                        "patientId":  patientId,
+                    },
+                    success: function(res){
+
+                        console.log(res)
+                        if(res === true){
+							location.href = "livechat.php";
+						}
     
                     }
                 });

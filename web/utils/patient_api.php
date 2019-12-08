@@ -38,6 +38,25 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     
     
     }
+
+
+    if (isset($_POST['check_is_counselor_selected'])) {
+
+        $patientId = $_POST['patientId'];
+
+
+
+        $result = check_is_counselor_selected($link, $patientId);
+
+        header('Content-Type: application/json');
+        echo json_encode($result, JSON_PRETTY_PRINT);     // Now we want to JSON encode these values to send them to $.ajax success.
+                                  
+ 
+    
+    
+    
+    
+    }
     
 
     

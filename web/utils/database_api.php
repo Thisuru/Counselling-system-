@@ -729,6 +729,25 @@ function getAllAnsewers($link,$patientId, $date_time){
 }
 
 
+function check_is_counselor_selected($link,$patientId){
+
+    $query = "SELECT * FROM patient_select_counselor WHERE patientId = $patientId";
+    $result = mysqli_query($link, $query)or die("Error");
+
+    if (mysqli_num_rows($result) > 0) {
+
+        return True;
+
+    }else{
+        return False;
+    }
+
+    // return $result;
+
+    
+}
+
+
 
 
 
