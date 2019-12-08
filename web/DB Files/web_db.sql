@@ -57,8 +57,8 @@ INSERT INTO `chatmessages` (`counsellor`, `patient`, `message`, `timestamp`) VAL
 CREATE TABLE if not exists `music` (
   `music_id` int(11) NOT NULL auto_increment,
   `music_path` varchar(500) NOT NULL,
-  `admin_email` varchar(50) NOT NULL,
-  `admin_name` varchar(50) NOT NULL,
+  `counselor_email` varchar(50) NOT NULL,
+  `counselor_name` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
   `description` varchar(500) NOT NULL,
   `date_time` varchar(50) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE if not exists `music` (
 -- Dumping data for table `music`
 --
 
-INSERT INTO `music` (`music_path`, `admin_email`, `admin_name`, `title`, `description`, `date_time`, `category`) VALUES
+INSERT INTO `music` (`music_path`, `counselor_email`, `counselor_name`, `title`, `description`, `date_time`, `category`) VALUES
 ('16209938502643_4cd4.mp3', 'aparana@gmail.com', 'Aparna', 'Music Title', 'desc', '2019-May-19_12:23', NULL);
 
 

@@ -273,8 +273,8 @@ function getAllNews($link) {
         while($row = mysqli_fetch_assoc($result)) {
 
             $article_no = $row['article_no'];
-            $email = $row['admin_email'];
-            $name = $row['admin_name'];
+            $email = $row['patient_email'];
+            $name = $row['patient_name'];
             $description = $row['description'];
             $photo_path = $row['photo_path'];
             $date_time = $row['date_time'];
@@ -291,7 +291,7 @@ function getAllNews($link) {
 }
 
 function addMusic($link, $music_record){
-    $query = "INSERT INTO music(music_path,	admin_email, admin_name, title,	description, date_time, category) VALUES ('".$music_record->getMusicPath()."', '".$music_record->getAdminEmail()."', '".$music_record->getAdminName()."', '".$music_record->getTitle()."', '".$music_record->getDescription()."', '".$music_record->getDateTime()."', '".$music_record->getCategory()."')";
+    $query = "INSERT INTO music(music_path,	counselor_email, counselor_name, title,	description, date_time, category) VALUES ('".$music_record->getMusicPath()."', '".$music_record->getAdminEmail()."', '".$music_record->getAdminName()."', '".$music_record->getTitle()."', '".$music_record->getDescription()."', '".$music_record->getDateTime()."', '".$music_record->getCategory()."')";
     if (mysqli_query($link, $query)) {
         return true;
     }
@@ -309,8 +309,8 @@ function getMusic($link){
 
             $music_id = $row['music_id'];
             $music_path = $row['music_path'];
-            $admin_email = $row['admin_email'];
-            $admin_name = $row['admin_name'];
+            $admin_email = $row['counselor_email'];
+            $admin_name = $row['counselor_name'];
             $title = $row['title'];
             $description = $row['description'];
             $date_time = $row['date_time'];
