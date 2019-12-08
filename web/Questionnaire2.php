@@ -249,7 +249,7 @@ ul {
 <script>
 
 // Number of questions. Max=52.
-const NUMQUESTIONS = 4;
+const NUMQUESTIONS = 21;
 
 // List of questions.
 let questionsMap = new Map();
