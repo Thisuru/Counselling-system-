@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tharinduranaweera
- * Date: 5/19/19
- * Time: 9:57 AM
- */
+
 session_start();
 
 require ('utils/database_api.php');
@@ -21,7 +16,7 @@ if ($user == null) {
 
 <html>
 	<head>
-		<title>Strata by HTML5 UP</title>
+		<title>Counselling System</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="counselorTemp/assets/css/main.css" />
@@ -32,10 +27,9 @@ if ($user == null) {
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="#" class="image avatar"><img src="counselorTemp/images/avatar.jpg" alt="" /></a>
-					<h1><strong>I am Strata</strong>, a super simple<br />
-					responsive site template freebie<br />
-					crafted by <a href="http://html5up.net">HTML5 UP</a>.</h1>
+					<a href="#" class="image avatar"><img src="counselorTemp/images/women.jpg" alt="" /></a>
+					<h1><strong  id="h1name">I am </strong> & I treat for <br> <strong id="category"></strong> category.<br />
+					My email is <strong  id="email"></strong> and <strong id="state">State </strong></h1>
 				</div>
 			</header>
 
@@ -45,18 +39,21 @@ if ($user == null) {
 				<!-- One -->
 					<section id="one">
 						<header class="major">
-							<h2>Conselor Profile Page</h2>
+							<h1>Conselor Profile Page</h1>
+                            <br><br>
 						</header>
-						<p>Accumsan orci faucibus id eu lorem semper. Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia ac in adipiscing in curae lobortis tortor primis integer massa adipiscing id nisi accumsan pellentesque commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque cubilia.</p>
-						<ul class="actions">
+                        <h4>Why seek counseling?</h4>
+						<p>We all take great care of our physical health. Many of us go for regular health checks to ensure our blood pressure, blood sugar, cholesterol etc are all within limits. We will consult a dentist for a toothache, a doctor for a stomach ache and so on.So what about our emotional health and wellbeing? How do we look after that? Physical and emotional wellbeing are closely intertwined; they go hand in hand and we cannot have one without the other.I believe that most of the time, we are able to maintain good emotional wellbeing without any assistance. We spend time doing the things we enjoy, we carve out quality time with family and friends, we are in touch with our emotions and so on. We are able to sort out most issues/problems successfully by using our inherent strengths and resources.</p>
+						<br>
+                        <ul class="actions">
 							<li><a href="#" class="button">Learn More</a></li>
 						</ul>
 					</section>
                 <!-- Dta -->
 
+<br>
 
-
-                <h1>Selected Patients</h1>
+<h1>Selected Patients</h1><br>
 <table id="approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
             <tr>
@@ -73,7 +70,7 @@ if ($user == null) {
 
     <br><br>
 
-    <div>
+    <!-- <div>
 <h1>Patient Past Scores</h1>
 <table id="PastScores" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
@@ -84,9 +81,11 @@ if ($user == null) {
             </tr>
         </thead>
     </table>
-</div>
+</div> -->
+
 <br><br>
-<div>
+
+<!-- <div>
 <h1>Patient Answers</h1>
 <table id="viewanswers" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
@@ -96,7 +95,7 @@ if ($user == null) {
             </tr>
         </thead>
     </table>
-</div>
+</div> -->
 
 <div>
 
@@ -116,7 +115,7 @@ if ($user == null) {
 						<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
 					</ul>
 					<ul class="copyright">
-						<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; Untitled</li><li>Design: <a href="#">Counselor</a></li>
 					</ul>
 				</div>
 			</footer>
@@ -168,7 +167,16 @@ function view_profile(){
                     success: function(res){
                         console.log("view_profile")
                         console.log(res)
+                        console.log(res["name"])
                         
+                        $('#h1name').append(res["name"])
+                        $('#category').append(res["category"])
+                        $("#email").append(res["email"])
+                        $("#state").append(res["state"])
+                        // $.each(res, function(index, value) {
+                        //     // $('#h1name').append($('<h1>').text(value.displayname));
+                        //     console.log("key is ",index, ":", value["name"])
+                        // });
                     }
                 });
     
@@ -187,18 +195,12 @@ function view_selected_patients(){
                     },
                     success: function(res){
                         patient_data(res)
-                        
-                        $.each( res, function( key, value ) {
-                            console.log("RRRRRRRRRRRRRRRRRRRRRRr")
-                            console.log(res.keys())
-                        });
                     }
                 });
 
 }
 
 function patient_data(data){
-    console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     console.log(data)
     $('#approved').DataTable( {
         "processing": true,
