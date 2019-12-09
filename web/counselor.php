@@ -17,34 +17,46 @@ if ($user == null) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
 
-<head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Colorlib Templates">
-    <meta name="author" content="Colorlib">
-    <meta name="keywords" content="Colorlib Templates">
+<html>
+	<head>
+		<title>Strata by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="counselorTemp/assets/css/main.css" />
+        <link href=https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css>
+	</head>
+	<body class="is-preload">
 
-    <title>User Registration</title>
-    <!-- <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="#" class="image avatar"><img src="counselorTemp/images/avatar.jpg" alt="" /></a>
+					<h1><strong>I am Strata</strong>, a super simple<br />
+					responsive site template freebie<br />
+					crafted by <a href="http://html5up.net">HTML5 UP</a>.</h1>
+				</div>
+			</header>
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
+		<!-- Main -->
+			<div id="main">
 
-<!-- 
-    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all"> -->
-    <link href=https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css>
+				<!-- One -->
+					<section id="one">
+						<header class="major">
+							<h2>Conselor Profile Page</h2>
+						</header>
+						<p>Accumsan orci faucibus id eu lorem semper. Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia ac in adipiscing in curae lobortis tortor primis integer massa adipiscing id nisi accumsan pellentesque commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque cubilia.</p>
+						<ul class="actions">
+							<li><a href="#" class="button">Learn More</a></li>
+						</ul>
+					</section>
+                <!-- Dta -->
 
-    <link href="css/main.css" rel="stylesheet" media="all">
-</head>
 
-<body>
 
-    <h1>Selected Patients</h1>
+                <h1>Selected Patients</h1>
 <table id="approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
         <thead>
             <tr>
@@ -59,6 +71,8 @@ if ($user == null) {
         </thead>
     </table>
 
+    <br><br>
+
     <div>
 <h1>Patient Past Scores</h1>
 <table id="PastScores" class="table table-striped table-bordered" style="width:100%" style="width:100%">
@@ -71,7 +85,7 @@ if ($user == null) {
         </thead>
     </table>
 </div>
-
+<br><br>
 <div>
 <h1>Patient Answers</h1>
 <table id="viewanswers" class="table table-striped table-bordered" style="width:100%" style="width:100%">
@@ -89,20 +103,42 @@ if ($user == null) {
 </div>
 
 
+                <!-- Dta -->
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+ 
 <script src="vendor/jquery/jquery.min.js"></script>
-
-<!-- <script src="vendor/select2/select2.min.js"></script>
-<script src="vendor/datepicker/moment.min.js"></script>
-<script src="vendor/datepicker/daterangepicker.js"></script> -->
-
-
 <script src="js/global.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer ></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" defer></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-</body>
+            
 
+		<!-- Scripts -->
+			<script src="counselorTemp/assets/js/jquery.min.js"></script>
+			<script src="counselorTemp/assets/js/jquery.poptrox.min.js"></script>
+			<script src="counselorTemp/assets/js/browser.min.js"></script>
+			<script src="counselorTemp/assets/js/breakpoints.min.js"></script>
+			<script src="counselorTemp/assets/js/util.js"></script>
+			<script src="counselorTemp/assets/js/main.js"></script>
+
+	</body>
 </html>
 
 <script>
@@ -130,6 +166,7 @@ function view_profile(){
                         "counselorId" : counsellorId
                     },
                     success: function(res){
+                        console.log("view_profile")
                         console.log(res)
                         
                     }
@@ -151,12 +188,18 @@ function view_selected_patients(){
                     success: function(res){
                         patient_data(res)
                         
+                        $.each( res, function( key, value ) {
+                            console.log("RRRRRRRRRRRRRRRRRRRRRRr")
+                            console.log(res.keys())
+                        });
                     }
                 });
 
 }
 
 function patient_data(data){
+    console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    console.log(data)
     $('#approved').DataTable( {
         "processing": true,
         "data": data,
