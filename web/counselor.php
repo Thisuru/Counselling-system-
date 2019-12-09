@@ -22,7 +22,22 @@ if ($user == null) {
 		<link rel="stylesheet" href="counselorTemp/assets/css/main.css" />
         <link href=https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css>
 	</head>
+
+    <header>
+            <nav>
+                <ul class = "nav">
+                    <li><a href="newsfeed.php">News Feed</a></li>
+                    <li><a href="addmusic.php">Add Music</a></li>
+                    <li><a href="music.php">Music</a></li>
+                    <li><a href="livechat.php">Live Chat</a></li>
+                    
+                </ul>
+            </nav>
+        </header>
+
+
 	<body class="is-preload">
+    <input id="log_out" type="button" class="Button" onclick="logout()"  value="Logout" />
 
 		<!-- Header -->
 			<header id="header">
@@ -53,49 +68,50 @@ if ($user == null) {
 
 <br>
 
-<h1>Selected Patients</h1><br>
-<table id="approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
-        <thead>
-            <tr>
-                <th>Counsellor ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>DOB</th>
-                <th>Gender</th>
-                <th>Selected Date And Time</th>
-                <th></th>
-            </tr>
-        </thead>
-    </table>
+<div id = "firstView">
+        <h1>Selected Patients</h1>
+        <table id="approved" class="table table-striped table-bordered" style="width:100%" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Counsellor ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>Selected Date And Time</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
-    <br><br>
 
-    <!-- <div>
-<h1>Patient Past Scores</h1>
-<table id="PastScores" class="table table-striped table-bordered" style="width:100%" style="width:100%">
-        <thead>
-            <tr>
-                <th>Date And Time</th>
-                <th>Marks</th>
-                <th></th>
-            </tr>
-        </thead>
-    </table>
-</div> -->
+    <div id = "secondView">
+        <h1>Patient Past Scores</h1>
+        <table id="PastScores" class="table table-striped table-bordered" style="width:100%" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Date And Time</th>
+                    <th>Marks</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
-<br><br>
-
-<!-- <div>
-<h1>Patient Answers</h1>
-<table id="viewanswers" class="table table-striped table-bordered" style="width:100%" style="width:100%">
-        <thead>
-            <tr>
-                <th>Question</th>
-                <th>Answer</th>
-            </tr>
-        </thead>
-    </table>
-</div> -->
+    <div id = "thirdView">
+        <h1>Patient Answers</h1>
+        <table id="viewanswers" class="table table-striped table-bordered" style="width:100%" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Answer</th>
+                </tr>
+            </thead>
+        </table>
+        <input id="updateState" type="button" class="Button" onclick="updateIsAnsweredState()"  value="enable Questionaire" />
+        <input type="button" class="Button" onclick="to_chat()"  value="Chat" />
+    </div>
 
 <div>
 
@@ -143,7 +159,9 @@ if ($user == null) {
 <script>
 
 $( document ).ready(function() {
-
+    $('#firstView').hide();
+    $('#secondView').hide();
+    $('#thirdView').hide();
     view_profile()
     view_selected_patients();
     
@@ -195,13 +213,16 @@ function view_selected_patients(){
                     },
                     success: function(res){
                         patient_data(res)
+                        $('#firstView').show();
                     }
                 });
 
 }
 
 function patient_data(data){
-    console.log(data)
+    if ($.fn.DataTable.isDataTable("#approved")) {
+        $('#approved').DataTable().clear().destroy();
+    }
     $('#approved').DataTable( {
         "processing": true,
         "data": data,
@@ -247,9 +268,10 @@ function patient_data(data){
 
 function viewPastScores(Id){
     console.log(Id)
+    patientId = Id;
          $.ajax({
                     type: "POST",
-                    url: 'utils/questions_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
                         "view_distinct" : "1",
                         "patientId" : Id
@@ -257,13 +279,16 @@ function viewPastScores(Id){
                     success: function(res){
                         console.log(res)
                         pastScores(res, Id)
+                        $('#secondView').show();
     
                     }
                 });
-
 }
 
 function pastScores(data,Id){
+    if ($.fn.DataTable.isDataTable("#PastScores")) {
+        $('#PastScores').DataTable().clear().destroy();
+    }
     $('#PastScores').DataTable( {
         "processing": true,
         "data": data,
@@ -278,16 +303,13 @@ function pastScores(data,Id){
         }}
         ]
     } );
-
-
 }
-
 function viewQuestionaire(e,pId){
     var date_time = e.getAttribute('custom');
     console.log(date_time,pId)
             $.ajax({
                     type: "POST",
-                    url: 'utils/questions_api.php',
+                    url: 'utils/counselor_api.php',
                     data: {
                         "view_answers" : "1",
                         "date_time" : date_time,
@@ -296,13 +318,15 @@ function viewQuestionaire(e,pId){
                     success: function(res){
                         console.log(res)
                         viewAnswers(res)
+                        $('#thirdView').show();
     
                     }
                 });
-
 }
-
 function viewAnswers(data){
+    if ($.fn.DataTable.isDataTable("#viewanswers")) {
+        $('#viewanswers').DataTable().clear().destroy();
+    }
     $('#viewanswers').DataTable( {
         "processing": true,
         "data": data,
@@ -312,14 +336,41 @@ function viewAnswers(data){
         
         ]
     } );
-
-
-
 }
-
-
-
-
-
-
+function updateIsAnsweredState(){
+    $.ajax({
+                    type: "POST",
+                    url: 'utils/counselor_api.php',
+                    data: {
+                        "updateIsAnsweredState" : "1",
+                        "patientId" : patientId
+                    },
+                    success: function(res){
+                        if(res === true){
+                            $('#updateState').hide();
+                        }
+                        
+    
+                    }
+                });
+}
+function to_chat(){
+    location.href = 'livechat.php';
+}
+function logout(){
+    localStorage.clear();
+            $.ajax({
+                    type: "POST",
+                    url: 'utils/log_out.php',
+                    data: {
+                        "logout" : "1",
+                    },
+                    success: function(res){
+                      
+							location.href = "login.php";
+						
+    
+                    }
+                });
+}
 </script>
